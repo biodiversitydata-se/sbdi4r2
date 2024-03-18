@@ -28,7 +28,7 @@ opts_chunk$set(
 # options(width = 120)
 ```
 
-Here we provide a collection of use-examples showing a range of queries that we think a typical use of the biodiversity infrastructure may want to perform. `sbdi4r2` is a wrapper for `galah` customized to interact with SDBI implementation. `galah` is an R interface to biodiversity data hosted by the 'living atlases'; a set of organisations that share a common codebase, and act as nodes of the Global Biodiversity Information Facility ([GBIF](https://www.gbif.org)). These organisations collate and store observations of individual life forms, using the ['Darwin Core'](https://dwc.tdwg.org) data standard.
+Here we provide a collection of use-examples showing a range of queries that we think a typical use of the biodiversity infrastructure may want to perform. `sbdi4r2` is a wrapper for `galah` customized to interact with the SDBI implementation. `galah` is an R interface to biodiversity data hosted by the 'living atlases'; a set of organisations that share a common codebase, and act as nodes of the Global Biodiversity Information Facility ([GBIF](https://www.gbif.org)). These organisations collate and store observations of individual life forms, using the ['Darwin Core'](https://dwc.tdwg.org) data standard.
 
 The sbdi4r2 package is primarily for accessing data. It includes some filter functions that allow you to filter prior to download. It also includes some simple summary functions, and some functions for some simple data exploration. The examples also show you how you can use the data by exploring and analyzing with help of other R packages.
 
