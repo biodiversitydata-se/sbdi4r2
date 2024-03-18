@@ -1,10 +1,9 @@
-# sbdi4r2 <img src="https://github.com/biodiversitydata-se/sbdi4r2/raw/master/man/figures/sbdi.png" align="right" width="120"/>
+# sbdi4r2 <img src="https://github.com/biodiversitydata-se/sbdi4r2/raw/main/man/figures/sbdi.png" align="right" width="120"/>
 
 [![License: GPL
 v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
-[![R-CMD-check](https://github.com/biodiversitydata-se/sbdi4r2/workflows/R-CMD-check/badge.svg)](https://github.com/biodiversitydata-se/sbdi4r2/actions)
 
 ### R functionality for the SBDI data portal
 
