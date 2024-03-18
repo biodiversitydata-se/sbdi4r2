@@ -1,4 +1,4 @@
-url: https://biodiversitydata-se.github.io/sbdi4r2/
+url: ~
 template:
   bootstrap: 5
 development:
@@ -7,11 +7,13 @@ navbar:
   structure:
     left:
     - home
-    - quickstart
+    - articles
     - reference
     right:
     - github
   components:
-    quickstart:
+    articles:
+      text: Articles
+      menu:
       - text: Introduction to sbdi4r2
         href: articles/sbdi4r.html
