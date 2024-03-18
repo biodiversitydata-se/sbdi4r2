@@ -54,7 +54,6 @@
 #' returns `data_request`. `request_metadata` returns `metadata_request`,
 #' `request_files()` returns `files_request`.
 #' @seealso [collapse.data_request()], [compute.data_request()], [collect.data_request()]
-#' @import galah
 #' @rdname sbdi_call
 #' @examples \dontrun{
 #' # Begin your query with `sbdi_call()`, then pipe using `%>%` or `|>`

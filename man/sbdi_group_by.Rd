@@ -8,8 +8,6 @@ sbdi_group_by(...)
 }
 \arguments{
 \item{...}{zero or more individual column names to include}
-
-\item{.data}{An object of class `data_request`}
 }
 \value{
 If any arguments are provided, returns a `data.frame` with

@@ -13,7 +13,7 @@
 #'
 #' \code{sbdi_reasons()} returns a data frame with information describing the valid options for \code{download_reason_id}
 #'
-#' @param \atlas string: Living Atlas to point to, SBDI by default. Can be an organisation name, 
+#' @param atlas string: Living Atlas to point to, SBDI by default. Can be an organisation name, 
 #' acronym, or region (see [show_all_atlases()] for admissible values).
 #' @param \dots Options can be defined using the form `name = "value"`.
 #' Valid arguments are:

@@ -10,14 +10,13 @@ sbdi_config(atlas = "SBDI", ...)
 sbdi_reasons()
 }
 \arguments{
+\item{atlas}{string: Living Atlas to point to, SBDI by default. Can be an organisation name, 
+acronym, or region (see [show_all_atlases()] for admissible values).}
+
 \item{\dots}{Options can be defined using the form `name = "value"`.
 Valid arguments are:
 
  *  `api-key` string: A registered API key (currently unused).
-
- *  `atlas` string: Living Atlas to point to, SBDI by default. Can be
- an organisation name, acronym, or region (see [show_all_atlases()] for
- admissible values).
 
  *  `directory` string: the directory to use for the cache.
  By default this is a temporary directory, which means that results will
