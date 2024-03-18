@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 # sbdi4r2 <img src="https://github.com/biodiversitydata-se/sbdi4r2/raw/master/man/figures/sbdi.png" align="right" width="120"/>
 
 [![License: GPL
