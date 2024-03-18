@@ -67,14 +67,13 @@
 #' sbdi_config(download_reason_id = 0)
 #'
 #' # To look up all valid reasons to enter, use `show_all(reasons)`
-#' show_all(reasons) or simply `show_reasons()`
+#' # show_all(reasons) or simply `show_reasons()`
 #'
 #' # Make debugging in your session easier by setting `verbose = TRUE`
 #' sbdi_config(verbose = TRUE)
 #' }
 #' @importFrom galah galah_config
 #' @export sbdi_config
-
 sbdi_config <- function(atlas = "SBDI",...) {
   galah_config(atlas = atlas, ...)
   galah_config()
