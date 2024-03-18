@@ -13,14 +13,12 @@
 #'
 #' \code{sbdi_reasons()} returns a data frame with information describing the valid options for \code{download_reason_id}
 #'
+#' @param \atlas string: Living Atlas to point to, SBDI by default. Can be an organisation name, 
+#' acronym, or region (see [show_all_atlases()] for admissible values).
 #' @param \dots Options can be defined using the form `name = "value"`.
 #' Valid arguments are:
 #'
 #'  *  `api-key` string: A registered API key (currently unused).
-#'
-#'  *  `atlas` string: Living Atlas to point to, SBDI by default. Can be
-#'  an organisation name, acronym, or region (see [show_all_atlases()] for
-#'  admissible values).
 #'
 #'  *  `directory` string: the directory to use for the cache.
 #'  By default this is a temporary directory, which means that results will
@@ -63,9 +61,6 @@
 #' # To download occurrence records, enter your email in `sbdi_config()`.
 #' # This email should be registered with the atlas in question.
 #' sbdi_config(email = "your-email@email.com")
-#'
-#' # Turn on caching in your session
-#' sbdi_config(caching = TRUE)
 #'
 #' # Some ALA services require that you add a reason for downloading data.
 #' # Add your selected reason using the option `download_reason_id`

@@ -1,0 +1,5 @@
+url: ~
+template:
+  bootstrap: 5
+articles:
+  sbdi4r2: sbdi4r2.html

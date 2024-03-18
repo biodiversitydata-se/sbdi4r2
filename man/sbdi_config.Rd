@@ -67,9 +67,6 @@ List valid download reasons
 # This email should be registered with the atlas in question.
 sbdi_config(email = "your-email@email.com")
 
-# Turn on caching in your session
-sbdi_config(caching = TRUE)
-
 # Some ALA services require that you add a reason for downloading data.
 # Add your selected reason using the option `download_reason_id`
 sbdi_config(download_reason_id = 0)
