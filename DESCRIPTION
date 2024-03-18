@@ -2,9 +2,17 @@ Package: sbdi4r2
 Type: Package
 Title: Swedish Biodiversity Data Infrastructure Data and Resources in R
 Version: 1.0.0
-Authors@R: c(person("Debora","Arlt", email="debora.arlt@slu.se", role=c("aut","cre")),
-	   person("Alejandro","Ruete",role="aut"),
-	   person("Manash","Shah",role="ctb"))
+Authors@R: 
+    c(person(given = "Debora",
+             family = "Arlt", 
+             email = "debora.arlt@slu.se", 
+             role = c("aut","cre")),
+      person(given = "Alejandro",
+             family = "Ruete",
+             role = "aut"),
+      person(given = "Manash",
+             family = "Shah",
+             role = "ctb"))
 Maintainer: Debora Arlt <debora.arlt@slu.se>
 Description: SBDI provides tools to enable users of biodiversity 
     information to find, access, combine and visualise Swedish data on
@@ -24,6 +32,8 @@ Depends:
 Imports: 
     galah
 Suggests: 
-    knitr
+    knitr,
+    pkgdown,
+    rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 7.3.1
