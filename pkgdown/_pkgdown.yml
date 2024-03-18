@@ -4,6 +4,13 @@ template:
 development:
   mode: auto
 navbar:
+  structure:
+    left:
+    - home
+    - articles
+    - reference
+    right:
+    - github
   components:
     articles:
       text: Articles
