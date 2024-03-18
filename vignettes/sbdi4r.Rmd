@@ -301,11 +301,7 @@ popup_link <- paste0("<a href=\"https://records.biodiversitydata.se/occurrences/
 
 ## blank map, with imagery background
 m <- leaflet() |>  
-  addProviderTiles("Esri.WorldImagery") |>  
-  ## add markers
-  # addCircleMarkers(xf$decimalLongitude, xf$decimalLatitude,  
-  #                  radius = 2, fillOpacity = .5, opacity = 1,
-  #                  popup = popup_link) |> 
+  addProviderTiles("Esri.WorldImagery") |>
   addCircleMarkers(data = xf_sf , 
                    radius = 2, fillOpacity = .5, opacity = 1,
                    popup = popup_link)

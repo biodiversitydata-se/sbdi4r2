@@ -153,10 +153,9 @@ xf <- sbdi_call() |>
   atlas_occurrences()
 
  ## note this should ideally be states        
-  data("swe_wgs84", package = "sbdi4r2", envir=environment())
+  data("swe_wgs84", package = "sbdi4r2", envir = environment())
   
-  plot(swe_wgs84[["Border"]]$geometry, col = "grey", 
-       border = NA) 
+  plot(swe_wgs84[["Border"]]$geometry, col = "grey", border = NA) 
   points(xf$decimalLongitude, xf$decimalLatitude, pch = 19, col = "black")
 
 ## -----------------------------------------------------------------------------
@@ -178,11 +177,7 @@ popup_link <- paste0("<a href=\"https://records.biodiversitydata.se/occurrences/
 
 ## blank map, with imagery background
 m <- leaflet() |>  
-  addProviderTiles("Esri.WorldImagery") |>  
-  ## add markers
-  # addCircleMarkers(xf$decimalLongitude, xf$decimalLatitude,  
-  #                  radius = 2, fillOpacity = .5, opacity = 1,
-  #                  popup = popup_link) |> 
+  addProviderTiles("Esri.WorldImagery") |>
   addCircleMarkers(data = xf_sf , 
                    radius = 2, fillOpacity = .5, opacity = 1,
                    popup = popup_link)
