@@ -1,4 +1,4 @@
-# sbdi4r2 <img src="https://github.com/biodiversitydata-se/sbdi4r2/raw/main/man/figures/sbdi.png" align="right" width="120"/>
+# sbdi4r2
 
 [![License: GPL
 v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
