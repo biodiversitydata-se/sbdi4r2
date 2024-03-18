@@ -14,4 +14,4 @@ navbar:
   components:
     quickstart:
       - text: Introduction to sbdi4r2
-        href: articles/sbdi4r2.html
+        href: articles/sbdi4r.html
