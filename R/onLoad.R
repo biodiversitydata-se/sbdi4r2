@@ -1,15 +1,16 @@
-.onAttach <- function(libname, pkgname) {
-  packageStartupMessage("This is a wrapper for the package galah-R designed to work with data hosted by the Swedish Biodiversity Data Infrastructure (SBDI).")
-}
+# .onAttach <- function(libname, pkgname) {
+#   
+# }
 
 #' Set-up for sbdi4r during loading
 #' @noRd
 #' @keywords Internal
 .onLoad <- function(libname, pkgname) {
+  packageStartupMessage("This is a wrapper for the package galah-R designed to work with data hosted by the Swedish Biodiversity Data Infrastructure (SBDI).")
   if (pkgname == "sbdi4r2") {
     # brew(.pkg = "sbdi4r2")
-    require(galah)
-    galah_config(atlas = "Sweden") # to cache defaults
+    # require(galah)
+    sbdi_config(atlas = "Sweden") # to cache defaults
   }
 }
 
