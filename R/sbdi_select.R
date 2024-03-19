@@ -14,8 +14,7 @@
 #'
 #' @param ... zero or more individual column names to include
 #' @param group `string`: (optional) name of one or more column groups to
-#' include. Valid options are `"basic"`, `"event"` and
-#' `"assertions"`
+#' include. Valid options are `"basic"`, `"event"` `"media"` and `"assertions"` 
 #' @return A tibble
 #' specifying the name and type of each column to include in the
 #' call to `atlas_counts()` or `atlas_occurrences()`.
@@ -82,5 +81,6 @@
 #' @importFrom galah galah_select
 #' @export
 sbdi_select <- function(..., group){
-  galah_select(..., group)
+  resp <- galah_select(..., group = group)
+  return(resp)
 }

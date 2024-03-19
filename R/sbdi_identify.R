@@ -44,5 +44,6 @@
 #' @importFrom galah galah_identify
 #' @export
 sbdi_identify <- function(...) {
-  galah_identify(...)
+  resp <- galah_identify(... = ...)
+  return(resp)
 }

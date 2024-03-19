@@ -94,5 +94,19 @@
 #' @importFrom galah galah_geolocate
 #' @export
 sbdi_geolocate <- function(..., type = c("polygon", "bbox")) {
-  galah_geolocate(..., type)
+  galah_geolocate(... = ..., type = type)
+}
+
+#' @rdname sbdi_geolocate
+#' @importFrom galah galah_polygon
+#' @export
+sbdi_polygon <- function(...){
+  galah_polygon(... = ...)
+}
+
+#' @rdname sbdi_geolocate
+#' @importFrom galah galah_bbox
+#' @export
+sbdi_bbox <- function(...) {
+  galah_bbox(... = ...)
 }

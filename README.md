@@ -21,7 +21,7 @@ the Atlas of Living Australia platform wrapping the `galah` package
 which provides similar services for the ALA.
 
 Use-examples are available in the package [vignette
-here](https://biodiversitydata-se.github.io/sbdi4r2/articles/sbdi4r2.html),
+here](https://biodiversitydata-se.github.io/sbdi4r2/articles/sbdi4r.html),
 or via (in R): `vignette("sbdi4r2")`. If you have any questions please
 get in contact with us via the [support
 center](https://docs.biodiversitydata.se/support/).
@@ -128,4 +128,4 @@ sbdi_config(download_reason_id = "your_reason_id")
 download_reason_id=10 for "testing", or 7 for "ecological research", 8
 for "systematic research/taxonomy", 3 for "education")
 
-### See examples on how to use the package in the next [vignette](https://biodiversitydata-se.github.io/sbdi4r2/articles/sbdi4r2.html)
+### See examples on how to use the package in the next [vignette](https://biodiversitydata-se.github.io/sbdi4r2/articles/sbdi4r.html)

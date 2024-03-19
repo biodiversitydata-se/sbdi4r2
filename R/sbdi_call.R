@@ -82,8 +82,7 @@
 #' @importFrom galah galah_call
 #' @export
 sbdi_call <- function(method = c("data", "metadata", "files"),
-                       type,
-                       ...){
-  resp <- galah_call(method = method, type, ...)
+                       type, ...){
+  resp <- galah_call(method = method, type = type, ... = ...)
   return(resp)
 }

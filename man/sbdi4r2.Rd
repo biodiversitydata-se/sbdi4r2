@@ -83,16 +83,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Debora Arlt \email{debora.arlt@slu.se}
+\strong{Maintainer}: Manash Shah \email{support@biodiversitydata.se} [contributor]
 
 Authors:
 \itemize{
+  \item Debora Arlt
   \item Alejandro Ruete
-}
-
-Other contributors:
-\itemize{
-  \item Manash Shah [contributor]
 }
 
 }

@@ -5,14 +5,18 @@ opts_chunk$set(
   comment = "#>"
 )
 
-## ----message=FALSE------------------------------------------------------------
+## ----load, eval=FALSE---------------------------------------------------------
+#  library(sbdi4r2)
+#  sbdi_config(email = "your.email@mail.com")
+
+## ----loadtrue, message=FALSE, include=FALSE-----------------------------------
 library(sbdi4r2)
 library(galah)
 sbdi_config(email = "aleruete@gmail.com")
 
-## ----message=FALSE------------------------------------------------------------
-to_install <- c( "dplyr", "ggplot2",  "lubridate", "leaflet","maps", "mapdata",
-                 "sf",  "tidyr", "vegan") 
+## ----otherpkg, message=FALSE--------------------------------------------------
+to_install <- c( "dplyr", "ggplot2", "htmlTable", "lubridate", "leaflet", 
+                 "maps", "mapdata", "sf",  "tidyverse", "vegan") 
 to_install <- to_install[!sapply(to_install, requireNamespace, quietly = TRUE)]
 if (length(to_install) > 0)
     install.packages(to_install, repos = "http://cran.us.r-project.org")
@@ -30,9 +34,12 @@ if (length(to_install) > 0)
 
 ## ----message=FALSE, eval=FALSE------------------------------------------------
 #  sx <- sx |>
-#    filter(Genus != "") ## restrict to species and not hybrids
+#    filter(Genus != "")
 
-## -----------------------------------------------------------------------------
+## ----table_source-------------------------------------------------------------
+library(dplyr)
+library(htmlTable)
+
 focal_spp <- search_taxa("Callitriche cophocarpa")
 ## or equally valid
 focal_spp <- search_taxa("sommarlånke")
@@ -42,15 +49,25 @@ x <- sbdi_call() |>
   sbdi_identify("Callitriche cophocarpa") |>
   atlas_occurrences()
 
-table(x$dataResourceName)
+x |> 
+  pull(dataResourceName) |> 
+  table() |> 
+  as.data.frame() |> 
+  rename("Source" = Var1) |> 
+  htmlTable()
 
-## ----message=FALSE------------------------------------------------------------
+## ----search_couple, message=FALSE---------------------------------------------
 taxa <- c("Callitriche", "Anarrhinum")
 x <- sbdi_call() |> 
   sbdi_identify(taxa) |>
   atlas_occurrences()
 
-table(x$dataResourceName)
+x |> 
+  pull(dataResourceName) |> 
+  table() |> 
+  as.data.frame() |> 
+  rename("Source" = Var1) |> 
+  htmlTable()
 
 ## ----message=FALSE------------------------------------------------------------
 taxa <- "Callitriche cophocarpa"
@@ -58,20 +75,24 @@ xf <- sbdi_call() |>
   sbdi_identify(taxa) |>
   filter(dataResourceName == "Lund University Biological Museum - Botanical collection (LD)") |>
   atlas_occurrences()
-table(xf$dataResourceName)
+
+xf |> 
+  pull(dataResourceName) |> 
+  table() |> 
+  as.data.frame() |> 
+  rename("Source" = Var1) |> 
+  htmlTable()
 
 ## ----eval= FALSE--------------------------------------------------------------
 #  show_all(fields)
-#  
-#  show_all(fields) |>
-#    filter(grepl("cl", id)) |>
-#    as.data.frame()
 
-## ----eval= FALSE--------------------------------------------------------------
-#  show_all(fields) |>
-#    filter(description == "LA-regioner") |>
-#    as.data.frame()
-#  
+## ----filter_cl, message = FALSE-----------------------------------------------
+show_all(fields) |> 
+  filter(grepl("cl", id)) |>  
+  as.data.frame() |> 
+  head(10)
+
+## ----filter_spatial, eval = FALSE---------------------------------------------
 #  show_all(fields) |>
 #    filter(description == "Län") |>
 #    as.data.frame()
@@ -80,23 +101,20 @@ table(xf$dataResourceName)
 #    sbdi_identify(taxa) |>
 #    filter("cl10097" == "Uppsala") |>
 #    atlas_occurrences()
-#  
-#  
 
-## ----message=FALSE------------------------------------------------------------
-xf <- sbdi_call() |> 
-  sbdi_identify(taxa) |>
-  filter(coordinateUncertaintyInMeters <= 100) |>
-  atlas_occurrences()
+## ----filter_coor, eval=FALSE--------------------------------------------------
+#  xf <- sbdi_call() |>
+#    sbdi_identify(taxa) |>
+#    filter(coordinateUncertaintyInMeters <= 100) |>
+#    atlas_occurrences()
 
-## ----message=FALSE------------------------------------------------------------
+## ----filter_time, message=FALSE-----------------------------------------------
 x2yr <- sbdi_call() |> 
   sbdi_identify(taxa) |>
   filter(year == 2010 | year == 2020) |>
   atlas_occurrences()
-nrow(x2yr)
 
-## ----message=FALSE, fig.width=8, fig.height=6---------------------------------
+## ----filter_timerange, message=FALSE, fig.width=8, fig.height=6---------------
 xf <- sbdi_call() |> 
   sbdi_identify(taxa) |>
   filter(year >= 2010, year <= 2020) |>
@@ -105,71 +123,71 @@ xf <- sbdi_call() |>
 library(lubridate)
 hist(year(xf$eventDate), xlab = "Year", main = "")
 
-## ----message=FALSE, fig.width=8, fig.height=6---------------------------------
+## ----filter_month, echo=FALSE, message=FALSE, fig.width=8, fig.height=6-------
 xf <- sbdi_call() |> 
   sbdi_identify(taxa) |>
   filter(year >= 2010, year <= 2020,
          month >= 6, month <= 8) |>
   atlas_occurrences()
 
-hist(month(xf$eventDate), xlab = "Month", main = "")
+barplot(table(month(xf$eventDate)), xlab = "Month", main = "")
 
-## ----message=FALSE------------------------------------------------------------
+## ----filter_bor, message=FALSE------------------------------------------------
 xbor <- sbdi_call() |> 
   sbdi_identify(taxa) |>
   filter(basisOfRecord == "PreservedSpecimen") |>
-  select(basisOfRecord) |> 
+  select(basisOfRecord, group = "basic") |> 
   atlas_occurrences()
-                  
-
-unique(xbor$basisOfRecord)
 
 ## ----assertions---------------------------------------------------------------
 show_all(assertions)
-assertFatal <- show_all(assertions) |> 
-  filter(category == "Error")
 search_all(assertions, "longitude")
+
+assertError <- show_all(assertions) |> 
+  filter(category == "Error")
 
 xassert <- sbdi_call() |> 
   sbdi_identify(taxa) |>
-  select(assertFatal$id) |> 
+  select(assertError$id) |> 
   atlas_occurrences()
 
-colSums(xassert[,assertFatal$id])
+assert_count <- colSums(xassert[,assertError$id])
+assert_count
 
 assertWarning <- show_all(assertions) |> 
   filter(category == "Warning")
 
 xassert <- sbdi_call() |> 
   sbdi_identify(taxa) |>
-  select(assertWarning$id) |> 
+  select(all_of(assertWarning$id)) |> 
   atlas_occurrences()
 
-colSums(xassert[,assertWarning$id])
+assert_count <- colSums(xassert[,assertWarning$id])
+assert_count[which(assert_count > 0)]
 
-## ----message=FALSE, fig.width=9, fig.height=9---------------------------------
+## ----plot_simple, message=FALSE, fig.width=9, fig.height=9--------------------
 xf <- sbdi_call() |> 
   sbdi_identify(taxa) |>
   atlas_occurrences()
 
- ## note this should ideally be states        
   data("swe_wgs84", package = "sbdi4r2", envir = environment())
   
   plot(swe_wgs84[["Border"]]$geometry, col = "grey", border = NA) 
   points(xf$decimalLongitude, xf$decimalLatitude, pch = 19, col = "black")
 
-## -----------------------------------------------------------------------------
+## ----plot_sf, message=FALSE, fig.width=9, fig.height=9------------------------
 library(sf)
 
 xf_sf <- xf |> 
   filter(!is.na(decimalLatitude),
          !is.na(decimalLongitude)) |> 
-  st_as_sf(coords = c("decimalLongitude", "decimalLatitude"), crs = 4326)
+  st_as_sf(coords = c("decimalLongitude", "decimalLatitude"), 
+           crs = 4326)
 
 plot(swe_wgs84[["Border"]]$geometry, col = "grey", border = NA) 
 plot(xf_sf$geometry, pch = 19, add = TRUE)
 
-## ----message=FALSE, fig.width=9, fig.height=9---------------------------------
+## ----plot_leaflet, message=FALSE, fig.width=9, fig.height=9-------------------
 library(leaflet)
 ## make a link to the web page for each occurrence
 popup_link <- paste0("<a href=\"https://records.biodiversitydata.se/occurrences/",
@@ -196,11 +214,13 @@ m
 #  # remove rows with missing values (NAs)
 #  calli <- na.omit(calli)
 #  
-#  # save new dataframe
+#  # save as csv
 #  write.csv(calli, "Callitriche.csv")
+#  
+#  # save as R specific format rds
+#  saveRDS(calli, "Callitriche.rds")
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
-library(sf)
 # load some shapes over Sweden
 # Political borders
 data("swe_wgs84", package = "sbdi4r2", envir = environment()) 
@@ -208,9 +228,6 @@ data("swe_wgs84", package = "sbdi4r2", envir = environment())
 data("Sweden_Grid_50km_Wgs84", package = "sbdi4r2", envir = environment()) 
 
 grid <- Sweden_Grid_50km_Wgs84
-# grid <- st_transform(grid, crs = st_crs(3006))
-
-nObs <- nrow(xf_sf)
 
 ## overlay the data with the grid
 listGrid <- st_intersects(grid, xf_sf)
@@ -223,13 +240,13 @@ for (i in seq(length(listGrid))) {
     ObsInGridList[[i]] <- st_drop_geometry(xf_sf[listGrid[[i]],])
   }
 }
+
 wNonEmpty <- which( unlist(lapply(ObsInGridList, function(x) !all(is.na(x)))) )
 if (length(wNonEmpty) == 0) message("Observations don't overlap any grid cell.")
 
-## check nObs
+## a simple check of number of observations
+nObs <- nrow(xf_sf)
 sum(unlist(lapply(ObsInGridList, nrow))) == nObs
-length(ObsInGridList) == nrow(grid)
-
 
 ## -----------------------------------------------------------------------------
 ## apply a summary over the grid
@@ -273,7 +290,7 @@ legend("bottomleft",
        title = "Number of \nobservations", pch = 15, bty = "n")
 suppressWarnings(par(oldpar))
 
-## ----message=FALSE, warning=FALSE---------------------------------------------
+## ----plot_grid, message=FALSE, warning=FALSE----------------------------------
 counties <- swe_wgs84$Counties
 obs <- st_transform(xf_sf, crs = st_crs(counties))
 
@@ -314,7 +331,6 @@ dataRes <- lapply(ObsInCountyList[wNonEmpty], function(x){
   ))
 })
 
-
 dataRes <- as.data.frame(dplyr::bind_rows(dataRes, .id = "id"))
 res[wNonEmpty,] <- dataRes[,-1]
 res$nObs <- as.numeric(res$nObs)
@@ -322,7 +338,7 @@ res$nObs <- as.numeric(res$nObs)
 resSf <- st_as_sf(cbind(res, st_geometry(counties)))
 rownames(resSf) <- counties$LnNamn
 
-## ----counties, warning=FALSE, fig.width=6, fig.height=6-----------------------
+## ----plot_counties, warning=FALSE, fig.width=6, fig.height=6------------------
 palBW <- leaflet::colorNumeric(c("white", "navyblue"), 
                                c(0, max(resSf$nObs, na.rm = TRUE)), 
                                na.color = "transparent")
@@ -338,11 +354,8 @@ legend("bottomleft",
        title = "Number of \nobservations", pch = 15, bty = "n")
 suppressWarnings(par(oldpar))
 
-## ----warning=FALSE, fig.width=8, fig.height=6---------------------------------
+## ----plot_countyna, warning=FALSE, fig.width=8, fig.height=6------------------
 countiesLab <- as.character(counties$LnNamn)
-## Add a column to the obs data.frame to hold the id of the overlapped polygon, 
-## in this case, Län (county) and plot which observation didn't fall with any 
-## territory.
 obs$county <- countiesLab[as.integer(st_intersects(obs, counties))]
 
 oldpar <- par()
@@ -352,35 +365,26 @@ plot(obs$geometry[which(is.na(obs$county))],
      pch = 19, cex = .5, col = "red", add = T)
 suppressWarnings(par(oldpar))
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----read_shape, eval=FALSE---------------------------------------------------
 #  shape <- st_read(dsn = file.path("your/path/to/file", "Kommun_Sweref99TM_region.shp"))
 
-## -----------------------------------------------------------------------------
-shape <- swe$Municipalities
+## ----load_municipality--------------------------------------------------------
+municipalities <- swe$Municipalities
 ## extract just the Municipality of Örebro
-shape <- shape[shape$KnNamn == "Örebro", ]
+shape <- municipalities |> 
+  filter(KnNamn == "Örebro")
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  wkt <- shape |>
-#    st_transform(crs = st_crs(4326)) |>
 #    st_geometry() |>
 #    st_as_text()
 
-## ----warning=FALSE------------------------------------------------------------
-shape <- st_transform(shape,
-                      crs = st_crs(4326))
-shape <- st_union(shape)
-
-## extract the convex hull of the polygon to reduce the length of the WKT string
-shape_ch <- st_convex_hull(shape)
-
-# cast it as MULTIPOLYGON as this is what SBDIs API need
-# NOTE: as of today, the SBDI APIs will only work properly if the polygon is 
-# submitted as a MULTIPOLYGON
-shape_ch <- st_cast(shape_ch, to = "POLYGON")
-
-# create WKT string
-wkt <- st_as_text(shape_ch)
+## ----write_wkt, warning=FALSE-------------------------------------------------
+wkt <- shape |> 
+  st_transform(crs = st_crs(4326)) |> # re project it to WGS84
+  st_convex_hull() |>  # extract the convex hull of the polygon to reduce the length of the WKT string 
+  st_geometry() |> 
+  st_as_text() # create WKT string
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  sbdi_call() |>
@@ -389,50 +393,50 @@ wkt <- st_as_text(shape_ch)
 #    filter(taxonRank == "species") |>
 #    atlas_occurrences() |>
 #    group_by(taxonConceptID, scientificName) |>
-#    reframe(count = n())
+#    reframe(freq = n()) |>
+#    arrange(freq) |>
+#    htmlTable()
 
-## ----message=FALSE, echo=FALSE------------------------------------------------
+## ----same_with_try, message=FALSE, echo=FALSE---------------------------------
 tryCatch({
   sbdi_call() |>
-  sbdi_identify("amphibia") |>
-  sbdi_geolocate(wkt) |>
-  filter(taxonRank == "species") |> 
-  atlas_occurrences() |> 
-  group_by(taxonConceptID, scientificName) |> 
-  reframe(count = n())
+    sbdi_identify("amphibia") |>
+    sbdi_geolocate(wkt) |>
+    filter(taxonRank == "species") |> 
+    atlas_occurrences() |> 
+    group_by(taxonConceptID, scientificName) |> 
+    reframe(freq = n()) |> 
+    arrange(freq) |> 
+    htmlTable()
 }, error = function(e) { print(e$message)})
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----transect, eval=FALSE-----------------------------------------------------
 #  ## A rough polygon around the Mällardalen
 #  wkt <- "POLYGON((14.94 58.88, 14.94 59.69, 18.92 59.69, 18.92 58.88, 14.94 58.88))"
 #  
-#  ## define some environmental layers of interest [see sbdi_fields(fields_type = "occurrence")]
+#  ## define some environmental layers of interest
 #  # el10009 WorldClim Mean Temperature of Warmest Quarter https://spatial.biodiversitydata.se/ws/layers/view/more/worldclim_bio_10
 #  # el10011 WorldClim Annual Precipitation https://spatial.biodiversitydata.se/ws/layers/view/more/worldclim_bio_12
 #  env_layers <- c("el10009","el10011")
 #  
-#  ## Download the data.  We use the `occurrences()` function, adding environmental
-#  ## data via the 'extra' parameter.
+#  ## Download the data.
 #  x <- sbdi_call() |>
 #    sbdi_identify("Fabaceae") |>
 #    sbdi_geolocate(wkt) |>
-#    filter(taxonRank == "species") |>
-#    select(recordID, scientificName, taxonConceptID, taxonRank,
-#           decimalLatitude, decimalLongitude,
-#           eventDate, occurrenceStatus, all_of(env_layers)) |>
+#    ## discard genus- and higher-level records
+#    filter(taxonRank %in%
+#             c("species", "subspecies", "variety", "form", "cultivar")) |>
+#    select(all_of(env_layers), taxonRank, group = "basic") |>
 #    atlas_occurrences()
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----save_fab, eval=FALSE-----------------------------------------------------
 #  library(tidyverse)
 #  xgridded <- x |>
-#      ## discard genus- and higher-level records
-#      filter(taxonRank %in%
-#               c("species", "subspecies", "variety", "form", "cultivar")) |>
-#      mutate(longitude = round(decimalLongitude * 5)/5,
-#             latitude = round(decimalLatitude * 5)/5,
-#             el10009 = el10009 /10) %>%
+#      mutate(longitude = round(decimalLongitude * 6)/6,
+#             latitude = round(decimalLatitude * 6)/6,
+#             el10009 = el10009 /10) |>
 #      ## average environmental vars within each bin
-#      group_by(longitude,latitude) %>%
+#      group_by(longitude,latitude) |>
 #      mutate(annPrec = mean(el10011, na.rm=TRUE),
 #             meanTempWarmQuart = mean(el10009, na.rm=TRUE)) |>
 #      ## subset to vars of interest
@@ -449,27 +453,25 @@ tryCatch({
 #  ## where a species was not present, it will have NA: convert these to 0
 #  sppcols <- setdiff(names(xgridded),
 #                     c("longitude", "latitude",
-#                       "annPrec",
-#                       "meanTempWarmQuart",
+#                       "annPrec", "meanTempWarmQuart",
 #                       "richness"))
 #  xgridded <- xgridded |>
 #    mutate_at(sppcols, function(z) ifelse(is.na(z), 0, z))
 #  saveRDS(xgridded, file = "vignette_fabaceae.rds")
 
-## ----include=FALSE------------------------------------------------------------
+## ----load_fab, include=FALSE--------------------------------------------------
 ## load data from a local copy so that vignette building doesn't require downloading a big chunk of data and slow sites-by-species processing
 ## this file generated by running the above unevaluated code blocks, then
 ## saveRDS(xgridded, file="vignette_fabaceae.rds")
 xgridded <- readRDS("vignette_fabaceae.rds")
 sppcols <- setdiff(names(xgridded), c("longitude", "latitude", 
-                                      "worldClimAnnualPrecipitation", 
-                                      "worldClimMeanTemperatureOfWarmestQuarter", 
+                                      "annPrec", "meanTempWarmQuart", 
                                       "richness"))
 
-## ----message=FALSE, warning=FALSE---------------------------------------------
+## ----show_fab, message=FALSE, warning=FALSE-----------------------------------
 xgridded[, 1:10]
 
-## ----warning=FALSE, fig.width=8, fig.height=6---------------------------------
+## ----plot_long, warning=FALSE, fig.width=8, fig.height=6----------------------
 library(ggplot2)
 ggplot(xgridded, aes(longitude, richness)) + 
   labs(x = "Longitud (º)", 
@@ -478,7 +480,7 @@ ggplot(xgridded, aes(longitude, richness)) +
   geom_point() + 
   theme_bw()
 
-## ----warning=FALSE, fig.width=8, fig.height=6---------------------------------
+## ----plot_env, warning=FALSE, fig.width=8, fig.height=6-----------------------
 ggplot(xgridded, aes(meanTempWarmQuart, annPrec, 
                      colour = richness)) +
   labs(x = "Mean temperature of warmest quarter (ºC)" , 
@@ -488,7 +490,7 @@ ggplot(xgridded, aes(meanTempWarmQuart, annPrec,
   geom_point(size=3) + 
   theme_bw()
 
-## ----fig.width=6, fig.height=6, message=FALSE, warning=FALSE------------------
+## ----plot_tree, fig.width=6, fig.height=6, message=FALSE, warning=FALSE-------
 library(vegan)
 ## Bray-Curtis dissimilarity
 D <- vegdist(xgridded[, sppcols], "bray")
@@ -496,11 +498,10 @@ D <- vegdist(xgridded[, sppcols], "bray")
 cl <- hclust(D, method = "ave")
 ## plot the dendrogram
 plot(cl)
-## extract group labels at the 5-group level
-grp <- cutree(cl, 5)
-## coalesce small (outlier) groups into a single catch-all group
-sing <- which(table(grp) < 5)
-# grp[grp %in% sing] <- 6 ## put these in a new combined group
+
+## ----plot_points, fig.width=6, fig.height=6, message=FALSE, warning=FALSE-----
+## extract group labels at the 10-group level
+grp <- cutree(cl, 10)
 grp <- sapply(grp, function(z)which(unique(grp) == z)) ## renumber groups
 xgridded$grp <- as.factor(grp)
 ## plot
@@ -513,6 +514,7 @@ ggplot(xgridded, aes(longitude, latitude, colour = grp)) +
   scale_colour_manual(values = thiscol) + 
   theme_bw()
 
+## ----plot_points_map, fig.width=6, fig.height=3, message=FALSE, warning=FALSE----
 ## or a slightly nicer map plot
 library(maps)
 library(mapdata)

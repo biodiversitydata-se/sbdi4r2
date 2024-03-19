@@ -75,7 +75,7 @@
 #' @importFrom galah galah_config
 #' @export sbdi_config
 sbdi_config <- function(atlas = "SBDI",...) {
-  galah_config(atlas = atlas, ...)
+  galah_config(atlas = atlas, ... = ...)
   galah_config()
 }
 

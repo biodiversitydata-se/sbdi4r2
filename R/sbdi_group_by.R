@@ -14,6 +14,6 @@
 #' @importFrom galah galah_group_by
 #' @export
 sbdi_group_by <- function(...){
-  resp <- galah_group_by(...)
+  resp <- galah_group_by(... = ...)
   return(resp)
 }

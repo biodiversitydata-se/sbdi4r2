@@ -4,16 +4,17 @@ Title: Swedish Biodiversity Data Infrastructure Data and Resources in R
 Version: 1.0.0
 Authors@R: 
     c(person(given = "Debora",
-             family = "Arlt", 
-             email = "debora.arlt@slu.se", 
-             role = c("aut","cre")),
+             family = "Arlt",
+             role = "aut"),
       person(given = "Alejandro",
              family = "Ruete",
              role = "aut"),
       person(given = "Manash",
              family = "Shah",
-             role = "ctb"))
-Maintainer: Debora Arlt <debora.arlt@slu.se>
+             email = "support@biodiversitydata.se",
+             role = c("ctb","cre"))
+             )
+Maintainer: Manash Shah <support@biodiversitydata.se>
 Description: SBDI provides tools to enable users of biodiversity 
     information to find, access, combine and visualise Swedish data on
     plants, animals and fungi; these have been made available from
@@ -30,9 +31,11 @@ BugReports: https://github.com/biodiversitydata-se/sbdi4r2/issues
 Depends:
     R (>= 4.1.0)
 Imports: 
-    galah
+    galah,
+    lifecycle (>= 1.0.0)
 Suggests: 
     knitr,
+    htmlTable,
     pkgdown,
     rmarkdown
 VignetteBuilder: knitr

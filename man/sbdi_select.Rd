@@ -10,8 +10,7 @@ sbdi_select(..., group)
 \item{...}{zero or more individual column names to include}
 
 \item{group}{`string`: (optional) name of one or more column groups to
-include. Valid options are `"basic"`, `"event"` and
-`"assertions"`}
+include. Valid options are `"basic"`, `"event"` `"media"` and `"assertions"`}
 }
 \value{
 A tibble

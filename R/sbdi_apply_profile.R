@@ -30,5 +30,6 @@
 #' @importFrom galah galah_apply_profile
 #' @export
 sbdi_apply_profile <- function(...){
-  galah_apply_profile(...)
+  resp <- galah_apply_profile(... = ...)
+  return(resp)
 }
