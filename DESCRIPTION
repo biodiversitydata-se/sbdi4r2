@@ -29,9 +29,9 @@ LazyData: true
 URL: https://github.com/biodiversitydata-se/sbdi4r2/
 BugReports: https://github.com/biodiversitydata-se/sbdi4r2/issues
 Depends:
-    R (>= 4.1.0)
+    R (>= 4.1.0),
+    galah
 Imports: 
-    galah,
     lifecycle (>= 1.0.0)
 Suggests: 
     knitr,
