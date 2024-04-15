@@ -81,6 +81,7 @@ sx <- sbdi_call() |>
         atlas_species() |> 
         filter(!is.na(genus)) |> 
         as.data.frame()
+sx
 ```
 
 Do you find it?
