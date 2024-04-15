@@ -77,7 +77,7 @@ to observations that meet particular quality-control criteria.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/biodiversitydata-se/sbdi4r2/}
+  \item \url{https://biodiversitydata-se.github.io/sbdi4r2/}
   \item Report bugs at \url{https://github.com/biodiversitydata-se/sbdi4r2/issues}
 }
 

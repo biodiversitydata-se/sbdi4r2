@@ -210,7 +210,7 @@ m <- leaflet() |>
                    popup = popup_link)
 m
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----save, eval=FALSE---------------------------------------------------------
 #  # save as data.frame
 #  Callitriche <- as.data.frame(xf)
 #  
@@ -229,7 +229,7 @@ m
 #  # save as R specific format rds
 #  saveRDS(calli, "Callitriche.rds")
 
-## ----message=FALSE, warning=FALSE---------------------------------------------
+## ----grid, message=FALSE, warning=FALSE---------------------------------------
 # load some shapes over Sweden
 # Political borders
 data("swe_wgs84", package = "sbdi4r2", envir = environment()) 
@@ -257,7 +257,7 @@ if (length(wNonEmpty) == 0) message("Observations don't overlap any grid cell.")
 nObs <- nrow(xf_sf)
 sum(unlist(lapply(ObsInGridList, nrow))) == nObs
 
-## -----------------------------------------------------------------------------
+## ----grid_summary-------------------------------------------------------------
 ## apply a summary over the grid
 nCells <- length(ObsInGridList)
 
@@ -285,7 +285,7 @@ res$nObs <- as.numeric(res$nObs)
 resSf <- st_as_sf(cbind(res, st_geometry(grid)) )
 rownames(resSf) <- grid$id
 
-## ----grid, message=FALSE, warning=FALSE, fig.width=6, fig.height=6------------
+## ----grid_plot, message=FALSE, warning=FALSE, fig.width=6, fig.height=6-------
 palBW <- leaflet::colorNumeric(palette = c("white", "navyblue"),
                                domain = c(0, max(resSf$nObs, na.rm = TRUE)), 
                                na.color = "transparent")
