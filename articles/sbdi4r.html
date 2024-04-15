@@ -153,7 +153,68 @@ family Paridae, but filter out hybrids between genus
 <span>        <span class="fu"><a href="../reference/sbdi_identify.html">sbdi_identify</a></span><span class="op">(</span><span class="st">"paridae"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>        <span class="fu"><a href="https://galah.ala.org.au/R/reference/atlas_species.html" class="external-link">atlas_species</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">genus</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>        <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">sx</span></span>
+<span><span class="co">#&gt;    taxon_concept_id                 species_name     scientific_name_authorship</span></span>
+<span><span class="co">#&gt; 1           9705453                  Parus major                 Linnaeus, 1758</span></span>
+<span><span class="co">#&gt; 2           2487879          Cyanistes caeruleus               (Linnaeus, 1758)</span></span>
+<span><span class="co">#&gt; 3           2487843            Poecile palustris               (Linnaeus, 1758)</span></span>
+<span><span class="co">#&gt; 4           2487871               Periparus ater               (Linnaeus, 1758)</span></span>
+<span><span class="co">#&gt; 5           2487866             Poecile montanus (Conrad von Baldenstein, 1827)</span></span>
+<span><span class="co">#&gt; 6           2487883        Lophophanes cristatus               (Linnaeus, 1758)</span></span>
+<span><span class="co">#&gt; 7           2487862              Poecile cinctus               (Boddaert, 1783)</span></span>
+<span><span class="co">#&gt; 8          10525787 Cyanistes cyanus x caeruleus                           &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 9           2487877             Cyanistes cyanus                 (Pallas, 1770)</span></span>
+<span><span class="co">#&gt; 10          4409010               Parus montanus   Conrad von Baldenstein, 1827</span></span>
+<span><span class="co">#&gt; 11          2487805         Poecile atricapillus               (Linnaeus, 1766)</span></span>
+<span><span class="co">#&gt; 12         10308870   Poecile cinctus x montanus                           &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 13          2487931                   Parus afer                   Gmelin, 1789</span></span>
+<span><span class="co">#&gt; 14          2487941                  Parus niger                 Vieillot, 1818</span></span>
+<span><span class="co">#&gt; 15          2487793           Poecile hudsonicus            (J.R.Forster, 1772)</span></span>
+<span><span class="co">#&gt; 16          2487857             Poecile lugubris               (Temminck, 1820)</span></span>
+<span><span class="co">#&gt; 17          2487887           Baeolophus bicolor               (Linnaeus, 1766)</span></span>
+<span><span class="co">#&gt; 18          2487926            Parus rufiventris                   Bocage, 1877</span></span>
+<span><span class="co">#&gt; 19          2487946          Parus griseiventris                Reichenow, 1882</span></span>
+<span><span class="co">#&gt;    taxon_rank  kingdom   phylum class         order  family       genus</span></span>
+<span><span class="co">#&gt; 1     species Animalia Chordata  Aves Passeriformes Paridae       Parus</span></span>
+<span><span class="co">#&gt; 2     species Animalia Chordata  Aves Passeriformes Paridae   Cyanistes</span></span>
+<span><span class="co">#&gt; 3     species Animalia Chordata  Aves Passeriformes Paridae     Poecile</span></span>
+<span><span class="co">#&gt; 4     species Animalia Chordata  Aves Passeriformes Paridae   Periparus</span></span>
+<span><span class="co">#&gt; 5     species Animalia Chordata  Aves Passeriformes Paridae     Poecile</span></span>
+<span><span class="co">#&gt; 6     species Animalia Chordata  Aves Passeriformes Paridae Lophophanes</span></span>
+<span><span class="co">#&gt; 7     species Animalia Chordata  Aves Passeriformes Paridae     Poecile</span></span>
+<span><span class="co">#&gt; 8     species Animalia Chordata  Aves Passeriformes Paridae   Cyanistes</span></span>
+<span><span class="co">#&gt; 9     species Animalia Chordata  Aves Passeriformes Paridae   Cyanistes</span></span>
+<span><span class="co">#&gt; 10    species Animalia Chordata  Aves Passeriformes Paridae       Parus</span></span>
+<span><span class="co">#&gt; 11    species Animalia Chordata  Aves Passeriformes Paridae     Poecile</span></span>
+<span><span class="co">#&gt; 12    species Animalia Chordata  Aves Passeriformes Paridae     Poecile</span></span>
+<span><span class="co">#&gt; 13    species Animalia Chordata  Aves Passeriformes Paridae       Parus</span></span>
+<span><span class="co">#&gt; 14    species Animalia Chordata  Aves Passeriformes Paridae       Parus</span></span>
+<span><span class="co">#&gt; 15    species Animalia Chordata  Aves Passeriformes Paridae     Poecile</span></span>
+<span><span class="co">#&gt; 16    species Animalia Chordata  Aves Passeriformes Paridae     Poecile</span></span>
+<span><span class="co">#&gt; 17    species Animalia Chordata  Aves Passeriformes Paridae  Baeolophus</span></span>
+<span><span class="co">#&gt; 18    species Animalia Chordata  Aves Passeriformes Paridae       Parus</span></span>
+<span><span class="co">#&gt; 19    species Animalia Chordata  Aves Passeriformes Paridae       Parus</span></span>
+<span><span class="co">#&gt;                       vernacular_name</span></span>
+<span><span class="co">#&gt; 1                           Great Tit</span></span>
+<span><span class="co">#&gt; 2                   Eurasian Blue Tit</span></span>
+<span><span class="co">#&gt; 3                           Marsh Tit</span></span>
+<span><span class="co">#&gt; 4                            Coal Tit</span></span>
+<span><span class="co">#&gt; 5                          Willow Tit</span></span>
+<span><span class="co">#&gt; 6                         Crested Tit</span></span>
+<span><span class="co">#&gt; 7               Gray-headed Chickadee</span></span>
+<span><span class="co">#&gt; 8                Azure Tit x Blue Tit</span></span>
+<span><span class="co">#&gt; 9                           Azure Tit</span></span>
+<span><span class="co">#&gt; 10                         willow tit</span></span>
+<span><span class="co">#&gt; 11             Black-Capped Chickadee</span></span>
+<span><span class="co">#&gt; 12 Grey-headed Chickadee x Willow Tit</span></span>
+<span><span class="co">#&gt; 13                           Gray Tit</span></span>
+<span><span class="co">#&gt; 14                 Southern Black-Tit</span></span>
+<span><span class="co">#&gt; 15                   Boreal Chickadee</span></span>
+<span><span class="co">#&gt; 16                         Sombre Tit</span></span>
+<span><span class="co">#&gt; 17                 Sennett'S Titmouse</span></span>
+<span><span class="co">#&gt; 18                 Rufous-bellied Tit</span></span>
+<span><span class="co">#&gt; 19                         Miombo Tit</span></span></code></pre></div>
 <p>Do you find it?</p>
 <p>We can make a taxonomic tree plot using the <code>phytools</code>
 package:</p>
@@ -596,7 +657,6 @@ quality issues, that is category = “Error” or “Warning”.</p>
 <span>  <span class="fu"><a href="https://galah.ala.org.au/R/reference/atlas_occurrences.html" class="external-link">atlas_occurrences</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Request for 614 occurrences placed in queue</span></span>
 <span><span class="co">#&gt; Current queue length: 1</span></span>
-<span><span class="co">#&gt; -</span></span>
 <span><span class="co">#&gt; Downloading</span></span>
 <span><span class="co">#&gt; Warning: The following fields were downloaded, but weren't requested in your query:</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> recordID</span></span>
