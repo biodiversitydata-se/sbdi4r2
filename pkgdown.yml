@@ -3,7 +3,7 @@ pkgdown: 2.0.8
 pkgdown_sha: ~
 articles:
   sbdi4r: sbdi4r.html
-last_built: 2024-04-15T14:49Z
+last_built: 2024-04-15T14:53Z
 urls:
   reference: https://biodiversitydata-se.github.io/sbdi4r2/reference
   article: https://biodiversitydata-se.github.io/sbdi4r2/articles
