@@ -11,30 +11,39 @@ opts_chunk$set(
 
 ## ----loadtrue, message=FALSE, include=FALSE-----------------------------------
 library(sbdi4r2)
-library(galah)
-sbdi_config(email = "aleruete@gmail.com")
+# library(galah)
+sbdi_config(email = "sbdi4r-test@biodiversitydata.se")
 
 ## ----otherpkg, message=FALSE--------------------------------------------------
 to_install <- c( "dplyr", "ggplot2", "htmlTable", "lubridate", "leaflet", 
-                 "maps", "mapdata", "sf",  "tidyverse", "vegan") 
+                 "maps", "mapdata", "phytools", "sf",  "tidyverse", "vegan") 
 to_install <- to_install[!sapply(to_install, requireNamespace, quietly = TRUE)]
 if (length(to_install) > 0)
     install.packages(to_install, repos = "http://cran.us.r-project.org")
 
-## ----warning=FALSE, message=FALSE, eval=FALSE---------------------------------
-#  sx <- sbdi_call() |>
-#    sbdi_identify("parus") |>
-#    atlas_species()
-#  sx
+## ----species, warning=FALSE, message=FALSE, eval=TRUE-------------------------
+sx <- sbdi_call() |> 
+        sbdi_identify("parus") |> 
+        atlas_species()
+sx
 
-## ----message=FALSE, eval=FALSE------------------------------------------------
-#  sx <- sbdi_call() |>
-#      sbdi_identify("paridae") |>
-#      atlas_species()
+## ----spec_family, message=FALSE, eval=TRUE------------------------------------
+sx <- sbdi_call() |> 
+        sbdi_identify("paridae") |> 
+        atlas_species() |> 
+        filter(!is.na(genus)) |> 
+        as.data.frame()
 
-## ----message=FALSE, eval=FALSE------------------------------------------------
-#  sx <- sx |>
-#    filter(Genus != "")
+## ----taxtree, message=FALSE, fig.width=8, fig.height=6------------------------
+library(phytools)
+## as.phylo requires the taxonomic columns to be factors
+sx$genus <- as.factor(sx$genus)
+sx$species_name <- as.factor(sx$species_name)
+sx$vernacular_name <- as.factor(sx$vernacular_name)
+
+## create phylo object of canonical name nested within Genus
+ax <- as.phylo(~genus/species_name, data = sx)
+plotTree(ax, fsize = 0.7, ftype="i") ## plot it
 
 ## ----table_source-------------------------------------------------------------
 library(dplyr)
@@ -69,11 +78,11 @@ x |>
   rename("Source" = Var1) |> 
   htmlTable()
 
-## ----message=FALSE------------------------------------------------------------
+## ----filters, message=FALSE---------------------------------------------------
 taxa <- "Callitriche cophocarpa"
-xf <- sbdi_call() |> 
+xf <- sbdi_call() |>
   sbdi_identify(taxa) |>
-  filter(dataResourceName == "Lund University Biological Museum - Botanical collection (LD)") |>
+  filter(dataResourceUid == "dr2") |>
   atlas_occurrences()
 
 xf |> 

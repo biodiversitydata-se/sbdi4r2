@@ -46,15 +46,15 @@ sbdi_config(email = "your.email@mail.com")
 
 ```{r loadtrue, message=FALSE, include=FALSE}
 library(sbdi4r2)
-library(galah)
-sbdi_config(email = "aleruete@gmail.com")
+# library(galah)
+sbdi_config(email = "sbdi4r-test@biodiversitydata.se")
 ```
 
 Then, check that we have some additional packages that we'll use in the examples, and install them if necessary.
 
 ```{r otherpkg, message=FALSE}
 to_install <- c( "dplyr", "ggplot2", "htmlTable", "lubridate", "leaflet", 
-                 "maps", "mapdata", "sf",  "tidyverse", "vegan") 
+                 "maps", "mapdata", "phytools", "sf",  "tidyverse", "vegan") 
 to_install <- to_install[!sapply(to_install, requireNamespace, quietly = TRUE)]
 if (length(to_install) > 0)
     install.packages(to_install, repos = "http://cran.us.r-project.org")
@@ -62,31 +62,42 @@ if (length(to_install) > 0)
 
 ## Example 1: Name searching and taxonomic trees
 
-We want to look at the taxonomy of titmice, but we don't know what the correct scientific name is, so let's search for it:
+![Tofmes (Crested tit)](https://upload.wikimedia.org/wikipedia/commons/8/87/Crested_tit_%288750219915%29.jpg)
 
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
+We want to look at the taxonomy of the Crested tit (*Lophophanes cristatus*), but we don't know what the correct scientific name is, so let's search for it:
+
+```{r species, warning=FALSE, message=FALSE, eval=TRUE}
 sx <- sbdi_call() |> 
-  sbdi_identify("parus") |> 
-  atlas_species()
+        sbdi_identify("parus") |> 
+        atlas_species()
 sx
 ```
 
-But we see that some non-birds are also returned, e.g. insects (Neuroctenus parus). We want to restrict the search to Paridae.
+But we see that some non-birds are also returned, e.g. insects (*Neuroctenus parus*). We want to restrict the search to the family Paridae, but filter out hybrids between genus (`genus == NA`).
 
-```{r, message=FALSE, eval=FALSE}
+```{r spec_family, message=FALSE, eval=TRUE}
 sx <- sbdi_call() |> 
-    sbdi_identify("paridae") |> 
-    atlas_species()
-```
-
-Filter to restrict to species
-
-```{r, message=FALSE, eval=FALSE}
-sx <- sx |> 
-  filter(Genus != "")
+        sbdi_identify("paridae") |> 
+        atlas_species() |> 
+        filter(!is.na(genus)) |> 
+        as.data.frame()
 ```
 
 Do you find it?
+
+We can make a taxonomic tree plot using the `phytools` package:
+
+```{r taxtree, message=FALSE, fig.width=8, fig.height=6}
+library(phytools)
+## as.phylo requires the taxonomic columns to be factors
+sx$genus <- as.factor(sx$genus)
+sx$species_name <- as.factor(sx$species_name)
+sx$vernacular_name <- as.factor(sx$vernacular_name)
+
+## create phylo object of canonical name nested within Genus
+ax <- as.phylo(~genus/species_name, data = sx)
+plotTree(ax, fsize = 0.7, ftype="i") ## plot it
+```
 
 ## Example 2: Get some data and work it out
 
@@ -131,13 +142,13 @@ x |>
 
 ### Search filters
 
-There are different data sources. Let's assume you only need to see data from one source, e.g. Lund University Biological Museum - Botanical collection (LD):
+There are different data sources. Let's assume you only need to see data from one source, e.g. Lund University Biological Museum - Botanical collection (LD), which we just happen to know its UID is "dr2" (more about how to find out this later):
 
-```{r, message=FALSE}
+```{r filters, message=FALSE}
 taxa <- "Callitriche cophocarpa"
-xf <- sbdi_call() |> 
+xf <- sbdi_call() |>
   sbdi_identify(taxa) |>
-  filter(dataResourceName == "Lund University Biological Museum - Botanical collection (LD)") |>
+  filter(dataResourceUid == "dr2") |>
   atlas_occurrences()
 
 xf |> 
@@ -155,7 +166,9 @@ The package offers a function `show_all_fields()` to help you know what fields y
 ```{r, eval= FALSE}
 show_all(fields)
 ```
+
 For example, in SBDI all fields starting with "cl" are spatial layers.
+
 ```{r filter_cl, message = FALSE}
 show_all(fields) |> 
   filter(grepl("cl", id)) |>  
@@ -175,6 +188,7 @@ xf <- sbdi_call() |>
   filter("cl10097" == "Uppsala") |>
   atlas_occurrences()
 ```
+
 Note that this is fundamentally different than filtering by `county=Uppsala` as this will search for the text `Uppsala` in the field `county`, rather than spatially matching the observations.
 
 [TO BE DEVELOPED] Otherwise, you can search available data resources, collections (and more) using the interactive function `pick_filter`. The `pick_filter` function lets you explore data collections, spatial layers. Soon there will be more indexed fields.
@@ -511,6 +525,7 @@ suppressWarnings(par(oldpar))
 ```
 
 ### Add the county name to each observation
+
 Let's try adding a column to the observations data frame to hold the id of the overlapped polygon, in this case, Län (county) and plot which observation didn't fall with any county.
 
 ```{r plot_countyna, warning=FALSE, fig.width=8, fig.height=6}
@@ -531,8 +546,7 @@ It is clear from this image that there are observations outside the territorial 
 
 Let's now ask: Which listed species of amphibians were observed in a Örebro?
 
-Vector spatial layers (eg. polygons) can be imported in a number of different ways and the package helps to pass those polygons into the search. 
-So the first step is to load a vector spatial layer. Download a .zip file with different [delimitation for Sweden](https://www.scb.se/hitta-statistik/regional-statistik-och-kartor/regionala-indelningar/digitala-granser) and move it somewhere you like in your computer. We recommend you move it into your working directory (`getwd()`). Extract the .zip file named KommunSweref99.zip.
+Vector spatial layers (eg. polygons) can be imported in a number of different ways and the package helps to pass those polygons into the search. So the first step is to load a vector spatial layer. Download a .zip file with different [delimitation for Sweden](https://www.scb.se/hitta-statistik/regional-statistik-och-kartor/regionala-indelningar/digitala-granser) and move it somewhere you like in your computer. We recommend you move it into your working directory (`getwd()`). Extract the .zip file named KommunSweref99.zip.
 
 ```{r read_shape, eval=FALSE}
 shape <- st_read(dsn = file.path("your/path/to/file", "Kommun_Sweref99TM_region.shp"))
@@ -705,7 +719,6 @@ cl <- hclust(D, method = "ave")
 plot(cl)
 ```
 
-
 ```{r plot_points, fig.width=6, fig.height=6, message=FALSE, warning=FALSE}
 ## extract group labels at the 10-group level
 grp <- cutree(cl, 10)
@@ -742,107 +755,171 @@ suppressWarnings(par(oldpar))
 <!-- R is pretty powerful when it comes to cleaning, selecting and filtering data -->
 
 <!-- ```{r Datahandling, message=FALSE, fig.width=8, fig.height=6} -->
+
 <!-- x <- occurrences(taxon="Callitriche cophocarpa", -->
+
 <!--                   fq = "data_resource_uid:dr2", -->
+
 <!--                   verbose = FALSE) -->
+
 <!-- #keep spatially unique data at 0.01 degrees (latitude and longitude) -->
+
 <!-- ll001 <- unique(x, spatial = 0.01) -->
 
 <!-- # #keep only information for which fatal or "error" assertions do not exist -->
+
 <!-- nofat <- subset(x, remove.fatal = TRUE) -->
 
 <!-- #keep only observations with a maximum spatial uncertainty of 50m -->
+
 <!-- SpatCert <- subset(x, max.spatial.uncertainty = 50) -->
 
 <!-- # quickly get some more info about the data: -->
+
 <!-- # no. observations (records) -->
+
 <!-- nrow(x$data) -->
 
 <!-- # no. obs/year -->
+
 <!-- freq_year <- table(x$year) -->
 
 <!-- # no. obs across years: -->
+
 <!-- plot(freq_year, bty = "n", ylab="Frequency") -->
+
 <!-- # or -->
+
 <!-- hist(x$data$year, 20, main = "", xlab = "Year") -->
 
 <!-- # Subsetting is done using '[ ]' -->
+
 <!-- x10yr <- x$data[(x$data$year>=2010 & x$data$year<=2019),]  -->
+
 <!-- table(x10yr$year) -->
+
 <!-- ``` -->
 
 <!-- ## Example 7: Aggregating data with 'BIRDS' -->
 
 <!-- [BIRDS](https://greensway.github.io/BIRDS/) is an R package that provides a set of tools for systematizing biodiversity data review in order to evaluate whether a set of species observation are fit-for-use and help take decisions upon its use in further analysis.\ -->
+
 <!-- In the following examples you will learn to aggregate statistics over space and time. -->
 
 <!-- ```{r BIRDSspatial, message=FALSE, warning=FALSE, eval=FALSE} -->
+
 <!-- remotes::install_github("Greensway/BIRDS") -->
+
 <!-- library(BIRDS) -->
+
 <!-- x <- occurrences(taxon="Callitriche cophocarpa", -->
+
 <!--                   fq = "data_resource_uid:dr2", -->
+
 <!--                   verbose = FALSE) -->
+
 <!-- wNAcoor <- which(is.na(x$data$latitude)) -->
+
 <!-- x$data <- x$data[-wNAcoor,] -->
 
 <!-- ### fill in NAs -->
+
 <!-- x$data <- x$data[-which(is.na(x$data$year)),] -->
+
 <!-- x$data$month <- ifelse(is.na(x$data$month), 1, x$data$month) -->
+
 <!-- x$data$day <- ifelse(is.na(x$data$day), 1, x$data$day) -->
 
 <!-- ## Define the visit -->
+
 <!-- OB <- organiseBirds(x$data[-wNAcoor,],  -->
+
 <!--                     sppCol = "scientificName",  -->
+
 <!--                     idCols = c("locality"),  -->
+
 <!--                     timeCols = c("year", "month","day"), -->
+
 <!--                     xyCols = c("longitude", "latitude")) -->
 
 <!-- SB <- summariseBirds(OB, grid = Sweden_Grid_25km_Wgs84) -->
+
 <!-- ``` -->
 
 <!-- ```{r plotBIRDSspatial, message=FALSE, warning=FALSE, fig.width=8, fig.height=6, eval=FALSE} -->
+
 <!-- SBspatial <- SB$spatial -->
+
 <!-- maxC <- max(SBspatial$nObs, na.rm = TRUE) -->
+
 <!-- palBW <- leaflet::colorNumeric(c("white", "navyblue"),  -->
+
 <!--                                c(0, maxC),  -->
+
 <!--                                na.color = "transparent") -->
+
 <!-- oldpar <- par() -->
+
 <!-- par(mar = c(4,0,4,0), mfrow=c(1,3)) -->
+
 <!-- plot(SBspatial$geometry, col=palBW(SBspatial$nObs), -->
+
 <!--      border = "grey", main="All years") ## with palette -->
+
 <!-- legend("topleft", inset = c(0,0.05), -->
+
 <!--        legend = round(seq(0, maxC, length.out = 5)), -->
+
 <!--        col = palBW(seq(0, maxC, length.out = 5)), -->
+
 <!--        title = "Number of \nobservations", pch = 15, bty="n") -->
 
 <!-- ## or export other combinations, e.g. one map per observed year -->
+
 <!-- yearlySf <- exportBirds(SB,  -->
+
 <!--                         dimension = "spatial",  -->
+
 <!--                         timeRes = "yearly",  -->
+
 <!--                         variable = "nObs",  -->
+
 <!--                         method = "sum") -->
 
 <!-- maxC <- max(st_drop_geometry(yearlySf), na.rm = TRUE) -->
+
 <!-- palBW <- leaflet::colorNumeric(c("white", "navyblue"),  -->
+
 <!--                                c(0, maxC),  -->
+
 <!--                                na.color = "transparent") -->
 
 <!-- plot(yearlySf$geometry, col = palBW(yearlySf$'1987'),  -->
+
 <!--      border = "grey", main = "1987") -->
+
 <!-- legend("topleft", inset = c(0,0.05), -->
+
 <!--        legend = round(seq(0, maxC, length.out = 5)), -->
+
 <!--        col = palBW(seq(0, maxC, length.out = 5)), -->
+
 <!--        title = "Number of \nobservations", pch = 15, bty = "n") -->
 
 <!-- plot(yearlySf$geometry, col = palBW(yearlySf$'2017'),  -->
+
 <!--      border = "grey", main = "2017") -->
+
 <!-- suppressWarnings(par(oldpar)) -->
+
 <!-- ``` -->
 
 <!-- Perhaps one needs to save many summaries over each grid cell. -->
 
 <!-- ```{r BIRDSsave, message=FALSE, warning=FALSE, eval=FALSE} -->
+
 <!-- gridSummary <- st_drop_geometry(SB$spatial) -->
+
 <!-- write.csv(gridSummary, "Callitriche_grid_summary.csv") -->
 
 <!-- ``` -->
@@ -850,16 +927,25 @@ suppressWarnings(par(oldpar))
 <!-- One could also think of aggregating the data temporally... -->
 
 <!-- ```{r BIRDStemporal, message=FALSE, warning=FALSE, fig.width=8, fig.height=6, eval=FALSE} -->
+
 <!-- # But the function exportBIrds() offers planty of combinations -->
+
 <!-- yearlyXTS <- exportBirds(SB,  -->
+
 <!--                          dimension = "temporal",  -->
+
 <!--                          timeRes = "yearly",  -->
+
 <!--                          variable = "nObs", -->
+
 <!--                          method = "sum") -->
 
 <!-- plot(yearlyXTS, col = "darkblue",  -->
+
 <!--      grid.ticks.on = "year",   -->
+
 <!--      grid.col = "lightgrey",   -->
+
 <!--      main = "Number of observations") -->
 
 <!-- ``` -->
