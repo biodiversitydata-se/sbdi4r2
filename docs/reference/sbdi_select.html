@@ -39,7 +39,7 @@ downloads, with the exception of GBIF, for which all columns are returned."><met
       <ul class="navbar-nav me-auto"><li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/sbdi4r.html">Introduction to sbdi4r2</a>
+    <a class="dropdown-item" href="../articles/intro.html">Introduction to sbdi4r2</a>
   </div>
 </li>
 <li class="active nav-item">
@@ -148,20 +148,20 @@ for how to get counts by levels of variables returned by `sbdi_select`;
 <span class="r-in"><span><span class="fu"><a href="sbdi_call.html">sbdi_call</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="sbdi_identify.html">sbdi_identify</a></span><span class="op">(</span><span class="st">"perameles"</span><span class="op">)</span><span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">sbdi_select</span><span class="op">(</span><span class="va">scientificName</span>, <span class="va">eventDate</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://galah.ala.org.au/R/reference/atlas_occurrences.html" class="external-link">atlas_occurrences</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">atlas_occurrences</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Only return the "basic" group of columns and the basisOfRecord column</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="sbdi_call.html">sbdi_call</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="sbdi_identify.html">sbdi_identify</a></span><span class="op">(</span><span class="st">"perameles"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">sbdi_select</span><span class="op">(</span><span class="va">basisOfRecord</span>, group <span class="op">=</span> <span class="st">"basic"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://galah.ala.org.au/R/reference/atlas_occurrences.html" class="external-link">atlas_occurrences</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">atlas_occurrences</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># When used in a pipe, `sbdi_select()` and `select()` are synonymous.</span></span></span>
 <span class="r-in"><span><span class="co"># Hence the previous example can be rewritten as:</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://galah.ala.org.au/R/reference/galah_call.html" class="external-link">request_data</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span><span class="fu">request_data</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/identify.html" class="external-link">identify</a></span><span class="op">(</span><span class="st">"perameles"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">basisOfRecord</span>, group <span class="op">=</span> <span class="st">"basic"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">select</span><span class="op">(</span><span class="va">basisOfRecord</span>, group <span class="op">=</span> <span class="st">"basic"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">collect</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
