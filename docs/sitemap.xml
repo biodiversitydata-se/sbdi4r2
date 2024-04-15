@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/404.html</loc>
+    <loc>/404.html</loc>
   </url>
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/articles/index.html</loc>
+    <loc>/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/articles/intro.html</loc>
+    <loc>/articles/intro.html</loc>
   </url>
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/authors.html</loc>
+    <loc>/authors.html</loc>
   </url>
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/index.html</loc>
+    <loc>/index.html</loc>
   </url>
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/LICENSE-text.html</loc>
+    <loc>/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/reference/index.html</loc>
+    <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/reference/sbdi4r2.html</loc>
+    <loc>/reference/sbdi4r2.html</loc>
   </url>
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/reference/sbdi_apply_profile.html</loc>
+    <loc>/reference/sbdi_apply_profile.html</loc>
   </url>
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/reference/sbdi_call.html</loc>
+    <loc>/reference/sbdi_call.html</loc>
   </url>
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/reference/sbdi_config.html</loc>
+    <loc>/reference/sbdi_config.html</loc>
   </url>
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/reference/sbdi_geolocate.html</loc>
+    <loc>/reference/sbdi_geolocate.html</loc>
   </url>
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/reference/sbdi_group_by.html</loc>
+    <loc>/reference/sbdi_group_by.html</loc>
   </url>
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/reference/sbdi_identify.html</loc>
+    <loc>/reference/sbdi_identify.html</loc>
   </url>
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/reference/sbdi_select.html</loc>
+    <loc>/reference/sbdi_select.html</loc>
   </url>
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/reference/swe.html</loc>
+    <loc>/reference/swe.html</loc>
   </url>
   <url>
-    <loc>https://biodiversitydata-se.github.io/sbdi4r2/reference/Sweden_Grid.html</loc>
+    <loc>/reference/Sweden_Grid.html</loc>
   </url>
 </urlset>

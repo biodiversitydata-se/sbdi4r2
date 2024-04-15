@@ -84,5 +84,5 @@ sbdi_config <- function(atlas = "SBDI",...) {
 #' @importFrom galah show_all
 #' @export
 sbdi_reasons <- function() {
-  show_all(reasons)
+  show_all("reasons")
 }

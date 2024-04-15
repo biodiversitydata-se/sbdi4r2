@@ -52,7 +52,7 @@ sbdi_config(email = "sbdi4r-test@biodiversitydata.se")
 
 Then, check that we have some additional packages that we'll use in the examples, and install them if necessary.
 
-```{r otherpkg, message=FALSE}
+```{r otherpkg, message=FALSE, eval=FALSE}
 to_install <- c( "dplyr", "ggplot2", "htmlTable", "lubridate", "leaflet", 
                  "maps", "mapdata", "phytools", "sf",  "tidyverse", "vegan") 
 to_install <- to_install[!sapply(to_install, requireNamespace, quietly = TRUE)]

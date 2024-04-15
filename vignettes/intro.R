@@ -14,12 +14,12 @@ library(sbdi4r2)
 # library(galah)
 sbdi_config(email = "sbdi4r-test@biodiversitydata.se")
 
-## ----otherpkg, message=FALSE--------------------------------------------------
-to_install <- c( "dplyr", "ggplot2", "htmlTable", "lubridate", "leaflet", 
-                 "maps", "mapdata", "phytools", "sf",  "tidyverse", "vegan") 
-to_install <- to_install[!sapply(to_install, requireNamespace, quietly = TRUE)]
-if (length(to_install) > 0)
-    install.packages(to_install, repos = "http://cran.us.r-project.org")
+## ----otherpkg, message=FALSE, eval=FALSE--------------------------------------
+#  to_install <- c( "dplyr", "ggplot2", "htmlTable", "lubridate", "leaflet",
+#                   "maps", "mapdata", "phytools", "sf",  "tidyverse", "vegan")
+#  to_install <- to_install[!sapply(to_install, requireNamespace, quietly = TRUE)]
+#  if (length(to_install) > 0)
+#      install.packages(to_install, repos = "http://cran.us.r-project.org")
 
 ## ----species, warning=FALSE, message=FALSE, eval=TRUE-------------------------
 sx <- sbdi_call() |> 
@@ -35,7 +35,7 @@ sx <- sbdi_call() |>
         as.data.frame()
 sx
 
-## ----taxtree, message=FALSE, fig.width=8, fig.height=6------------------------
+## ----taxtree, fig.height=6, fig.width=8, message=FALSE------------------------
 library(phytools)
 ## as.phylo requires the taxonomic columns to be factors
 sx$genus <- as.factor(sx$genus)

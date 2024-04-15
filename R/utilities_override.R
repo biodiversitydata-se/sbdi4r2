@@ -13,6 +13,9 @@
 #   )
 # }
 
+#' @importFrom potions pour
+#' @noRd
+#' @keywords Internal
 species_facets <- function(){
   atlas <- pour("atlas", "region")
   switch(atlas,

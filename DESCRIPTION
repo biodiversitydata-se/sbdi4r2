@@ -34,9 +34,19 @@ Depends:
 Imports: 
     lifecycle (>= 1.0.0)
 Suggests: 
-    knitr,
+    dplyr,
+    ggplot2,
     htmlTable,
+    knitr,
+    lubridate,
+    leaflet,
+    maps,
+    mapdata,
+    phytools,
     pkgdown,
-    rmarkdown
+    rmarkdown,
+    sf,
+    tidyverse,
+    vegan
 VignetteBuilder: knitr
 RoxygenNote: 7.3.1
