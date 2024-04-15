@@ -33,6 +33,7 @@ sx <- sbdi_call() |>
         atlas_species() |> 
         filter(!is.na(genus)) |> 
         as.data.frame()
+sx
 
 ## ----taxtree, message=FALSE, fig.width=8, fig.height=6------------------------
 library(phytools)

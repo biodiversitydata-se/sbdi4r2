@@ -109,10 +109,10 @@ to observations that meet particular quality-control criteria.</p>
     
 
 <p>**Piping functions**</p>
-<p>* [sbdi_call()] or <code>request_()</code> et al.  Start to build a data query
-  * <code>collapse()</code> Generate a query
-  * <code>compute()</code> Compute a query
-  * <code>collect()</code> Retrieve a database query</p>
+<p>* [sbdi_call()] or <code><a href="https://galah.ala.org.au/R/reference/galah_call.html" class="external-link">request_()</a></code> et al.  Start to build a data query
+  * <code><a href="https://galah.ala.org.au/R/reference/collapse_galah.html" class="external-link">collapse()</a></code> Generate a query
+  * <code><a href="https://galah.ala.org.au/R/reference/compute_galah.html" class="external-link">compute()</a></code> Compute a query
+  * <code><a href="https://galah.ala.org.au/R/reference/collect_galah.html" class="external-link">collect()</a></code> Retrieve a database query</p>
 <p>**Look up information**</p>
 <p>* [search_taxa()] Search for taxa using a text-search
   * [search_identifiers()] Search for taxa using taxonomic identifiers
@@ -120,17 +120,17 @@ to observations that meet particular quality-control criteria.</p>
   * [show_values()] &amp; [search_values()] Show or search for values _within_
   `fields`, `profiles`, `lists`, `collections`, `datasets` or `providers`</p>
 <p>**Lazy data manipulation**</p>
-<p>* <code><a href="https://rdrr.io/r/graphics/identify.html" class="external-link">identify()</a></code> or [sbdi_identify()] Search for taxonomic identifiers
-  * <code><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter()</a></code> or [sbdi_filter()]Filter records
-  * <code>select()</code> or [sbdi_select()]Fields to report information for
-  * <code>group_by()</code> or [sbdi_group_by()] Fields to group counts by
-  * <code>st_crop()</code> or [sbdi_geolocate()] Specify a location
+<p>* <code><a href="https://galah.ala.org.au/R/reference/galah_identify.html" class="external-link">identify()</a></code> or [sbdi_identify()] Search for taxonomic identifiers
+  * <code><a href="https://galah.ala.org.au/R/reference/galah_filter.html" class="external-link">filter()</a></code> or [sbdi_filter()]Filter records
+  * <code><a href="https://galah.ala.org.au/R/reference/galah_select.html" class="external-link">select()</a></code> or [sbdi_select()]Fields to report information for
+  * <code><a href="https://galah.ala.org.au/R/reference/galah_group_by.html" class="external-link">group_by()</a></code> or [sbdi_group_by()] Fields to group counts by
+  * <code><a href="https://galah.ala.org.au/R/reference/galah_geolocate.html" class="external-link">st_crop()</a></code> or [sbdi_geolocate()] Specify a location
   * [apply_profile()] or [sbdi_apply_profile()] Restrict to data that pass predefined checks (ALA only)
-  * <code>slice_head()</code> Choose the first n rows of a download
-  * <code>arrange()</code> Arrange rows of a query on the server side</p>
+  * <code><a href="https://galah.ala.org.au/R/reference/slice_head.html" class="external-link">slice_head()</a></code> Choose the first n rows of a download
+  * <code><a href="https://galah.ala.org.au/R/reference/arrange.html" class="external-link">arrange()</a></code> Arrange rows of a query on the server side</p>
 <p>**Download data**</p>
 <p>* [atlas_occurrences()] Download occurrence records
-  * [atlas_counts()] or <code>count()</code> Count the number of records or species returned by a query
+  * [atlas_counts()] or <code><a href="https://galah.ala.org.au/R/reference/atlas_counts.html" class="external-link">count()</a></code> Count the number of records or species returned by a query
   * [atlas_species()] Download species lists
   * [atlas_taxonomy()] Return a section of the ALA taxonomic tree
   * [atlas_media()] View images and sounds available to download
