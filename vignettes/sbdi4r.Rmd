@@ -345,7 +345,7 @@ m
 
 ### Save the data
 
-```{r, eval=FALSE}
+```{r save, eval=FALSE}
 # save as data.frame
 Callitriche <- as.data.frame(xf)
 
@@ -369,7 +369,7 @@ saveRDS(calli, "Callitriche.rds")
 
 Now, following with the data downloaded in the previous example, we want to summarise occurrences over a defined grid instead of plotting every observation point. First we need to overlay the observations with the grid. In this case, the standard Swedish grids at 50, 25, 10 and 5 km are provided as data (with Coordinate Reference System WGS84 EPSG:4326).
 
-```{r, message=FALSE, warning=FALSE}
+```{r grid, message=FALSE, warning=FALSE}
 # load some shapes over Sweden
 # Political borders
 data("swe_wgs84", package = "sbdi4r2", envir = environment()) 
@@ -404,7 +404,7 @@ The result `ObsInGridList` is a `list` object with a subset of the data on each 
 
 Now let's summarise occurrences within grid cells:
 
-```{r}
+```{r grid_summary}
 ## apply a summary over the grid
 nCells <- length(ObsInGridList)
 
@@ -437,7 +437,7 @@ rownames(resSf) <- grid$id
 
 Finally plot the grid summary as a map:
 
-```{r grid, message=FALSE, warning=FALSE, fig.width=6, fig.height=6}
+```{r grid_plot, message=FALSE, warning=FALSE, fig.width=6, fig.height=6}
 palBW <- leaflet::colorNumeric(palette = c("white", "navyblue"),
                                domain = c(0, max(resSf$nObs, na.rm = TRUE)), 
                                na.color = "transparent")

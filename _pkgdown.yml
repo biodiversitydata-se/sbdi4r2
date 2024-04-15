@@ -11,9 +11,3 @@ navbar:
     - reference
     right:
     - github
-  components:
-    articles:
-      text: Articles
-      menu:
-      - text: Introduction to sbdi4r2
-        href: articles/sbdi4r.html
