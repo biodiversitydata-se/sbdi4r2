@@ -72,9 +72,7 @@ page](https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#Internationalizatio
 First, ensure that `libcurl` is installed on your system --- e.g. on
 Ubuntu, open a terminal and do:
 
-``` bash
-sudo apt-get install libcurl4-openssl-dev
-```
+` sudo apt-get install libcurl4-openssl-dev `
 
 or install `libcurl4-openssl-dev` via the Software Centre.
 
