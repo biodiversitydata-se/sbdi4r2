@@ -88,7 +88,7 @@ Do you find it?
 
 We can make a taxonomic tree plot using the `phytools` package:
 
-```{r taxtree, message=FALSE, fig.width=8, fig.height=6}
+```{r taxtree, fig.height=6, fig.width=8, message=FALSE}
 library(phytools)
 ## as.phylo requires the taxonomic columns to be factors
 sx$genus <- as.factor(sx$genus)
