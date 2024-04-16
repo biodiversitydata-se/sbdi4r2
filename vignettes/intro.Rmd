@@ -240,7 +240,7 @@ xf <- sbdi_call() |>
   atlas_occurrences()
 ```
 
-```{r barplot, eval=false}
+```{r barplot, eval=FALSE}
 barplot(table(month(xf$eventDate)), xlab = "Month", main = "")
 ```
 
@@ -362,7 +362,7 @@ m <- leaflet() |>
                    popup = popup_link)
 ```
 
-```{r plot_leaflet, fig.width=9, fig.height=9}
+```{r plot_leaflet2, fig.width=9, fig.height=9}
 m
 ```
 
