@@ -89,18 +89,18 @@
 <p>The package is not yet available on CRAN therefore it should be installed from its GitHub repository.</p>
 <p>In R:</p>
 <p>Or the development version from GitHub:</p>
-<p><code>{r, eval=FALSE} install.packages("remotes")  remotes::install_github("biodiversitydata-se/sbdi4r2")</code></p>
+<p><code>{install.packages("remotes")} remotes::install_github("biodiversitydata-se/sbdi4r2")</code></p>
 <div class="section level3">
 <h3 id="windows">Windows<a class="anchor" aria-label="anchor" href="#windows"></a>
 </h3>
 <p>If you see an error about “ERROR: lazy loading failed for package ‘sbdi4r2’”, this may be due to you trying to install on a network location. Try instead to install on a local location: first create the local location you want to use, and then specify this location for installing, and later loading the package:</p>
-<p><code>{r windows, eval=FALSE} install_github("biodiversitydata-se/sbdi4r2", lib = "C:/pathname/MyLibrary") library(sbdi4r2, lib.loc = "C:/pathname/MyLibrary")</code></p>
+<p><code>{install_github("biodiversitydata-se/sbdi4r2", lib = "C:/pathname/MyLibrary")} library(sbdi4r2, lib.loc = "C:/pathname/MyLibrary")</code></p>
 </div>
 <div class="section level3">
 <h3 id="mac">Mac<a class="anchor" aria-label="anchor" href="#mac"></a>
 </h3>
 <p>If you see an error about a failure to set default locale, you will need to manually set this:</p>
-<p><code>{r mac, eval=FALSE} system('defaults write org.R-project.R force.LANG en_US.UTF-8')</code></p>
+<p><code>{system('defaults write org.R-project.R force.LANG en_US.UTF-8')}</code></p>
 <p>and restart R.</p>
 <p>More information can be found on the <a href="https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#Internationalization-of-the-R_002eapp" class="external-link">CRAN R for Mac page</a>.</p>
 </div>
@@ -108,7 +108,7 @@
 <h3 id="linux">Linux<a class="anchor" aria-label="anchor" href="#linux"></a>
 </h3>
 <p>First, ensure that <code>libcurl</code> is installed on your system — e.g. on Ubuntu, open a terminal and do:</p>
-<p><code>sudo apt-get install libcurl4-openssl-dev</code></p>
+<p><code>{apt-get install libcurl4-openssl-dev}</code></p>
 <p>or install <code>libcurl4-openssl-dev</code> via the Software Centre.</p>
 <p>Then, in R as shown above.</p>
 </div>
@@ -126,19 +126,19 @@
 <h3 id="e-mail-address">E-mail address<a class="anchor" aria-label="anchor" href="#e-mail-address"></a>
 </h3>
 <p>Each download request to SBDI servers is also accompanied by an “e-mail address” string that identifies the user making the request. You will need to provide an email address registered with the SBDI. You can create an account <a href="https://auth.biodiversitydata.se/cas/login" class="external-link">here</a>. Once an email is registered with the SBDI, it should be stored in the config:</p>
-<p><code>{r config1, eval=FALSE} sbdi_config(email = "your.valid@emailaddress.com")</code></p>
+<p><code>{sbdi_config(email = "your.valid@emailaddress.com")}</code></p>
 </div>
 <div class="section level3">
 <h3 id="debugging">Debugging<a class="anchor" aria-label="anchor" href="#debugging"></a>
 </h3>
 <p>If things aren’t working as expected, more detail (particularly about web requests and caching behaviour) can be obtained by setting the verbose configuration option:</p>
-<p><code>{r config2, eval=FALSE} sbdi_config(verbose = TRUE)</code></p>
+<p><code>{sbdi_config(verbose = TRUE)}</code></p>
 </div>
 <div class="section level3">
 <h3 id="setting-the-download-reason">Setting the download reason<a class="anchor" aria-label="anchor" href="#setting-the-download-reason"></a>
 </h3>
 <p>SBDI requires that you provide a reason when downloading occurrence data (via the sbdi4r2 <code>occurrences()</code> function). You can provide this as a parameter directly to each call of <code>occurrences()</code>, or you can set it once per session using:</p>
-<p><code>{r config3, eval=FALSE} sbdi_config(download_reason_id = "your_reason_id")</code></p>
+<p><code>{sbdi_config(download_reason_id = "your_reason_id")}</code></p>
 <p>(See <code><a href="reference/sbdi_config.html">sbdi_reasons()</a></code> for valid download reasons, e.g. download_reason_id=10 for “testing”, or 7 for “ecological research”, 8 for “systematic research/taxonomy”, 3 for “education”)</p>
 </div>
 <div class="section level3">
