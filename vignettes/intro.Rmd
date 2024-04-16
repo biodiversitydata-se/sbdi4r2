@@ -88,7 +88,7 @@ Do you find it?
 
 We can make a taxonomic tree plot using the `phytools` package:
 
-```{r taxtree, fig.height=6, fig.width=8, message=FALSE}
+```{r taxtree, fig.height=6, fig.width=8, message=FALSE, eval=FALSE}
 library(phytools)
 ## as.phylo requires the taxonomic columns to be factors
 sx$genus <- as.factor(sx$genus)
@@ -99,6 +99,8 @@ sx$vernacular_name <- as.factor(sx$vernacular_name)
 ax <- as.phylo(~genus/species_name, data = sx)
 plotTree(ax, fsize = 0.7, ftype="i") ## plot it
 ```
+
+![Taxonomic tree](intro_files/figure-html/taxtree-1.png)
 
 ## Example 2: Get some data and work it out
 
@@ -164,7 +166,7 @@ xf |>
 
 The package offers a function `show_all_fields()` to help you know what fields you can query. There are many such help functions, check `?show_all()`.
 
-```{r, eval= FALSE}
+```{r allfields, eval= FALSE}
 show_all(fields)
 ```
 
@@ -214,15 +216,19 @@ x2yr <- sbdi_call() |>
 
 In the same way, one could search for observations *between* two years:
 
-```{r filter_timerange, message=FALSE, fig.width=8, fig.height=6}
+```{r filter_timerange, message=FALSE}
+library(lubridate)
 xf <- sbdi_call() |> 
   sbdi_identify(taxa) |>
   filter(year >= 2010, year <= 2020) |>
   atlas_occurrences()
+```
 
-library(lubridate)
+```{r hist_years, , fig.width=8, fig.height=6, eval=FALSE}
 hist(year(xf$eventDate), xlab = "Year", main = "")
 ```
+
+![Histogram over years](intro_files/figure-html/filter_timerange-1.png)
 
 Likewise, search conditions can be accumulated and will be treated as AND conditions:
 
@@ -232,9 +238,13 @@ xf <- sbdi_call() |>
   filter(year >= 2010, year <= 2020,
          month >= 6, month <= 8) |>
   atlas_occurrences()
+```
 
+```{r barplot, eval=false}
 barplot(table(month(xf$eventDate)), xlab = "Month", main = "")
 ```
+
+![Barlopt over months](intro_files/figure-html/filter_month-1.png)
 
 or, occurrences could be filtered by the basis of record (that is, how was the observation recorded):
 
@@ -289,10 +299,14 @@ xf <- sbdi_call() |>
   atlas_occurrences()
 
   data("swe_wgs84", package = "sbdi4r2", envir = environment())
-  
-  plot(swe_wgs84[["Border"]]$geometry, col = "grey", border = NA) 
+```
+
+```{r plor_borders, eval=FALSE}
+plot(swe_wgs84[["Border"]]$geometry, col = "grey", border = NA) 
   points(xf$decimalLongitude, xf$decimalLatitude, pch = 19, col = "black")
 ```
+
+![Simple map plot](intro_files/figure-html/plot_simple-1.png)
 
 <!-- You can quickly plot all the observations with the function `ocurrence_plot()`, here we specify to map all 'error' issues: -->
 
@@ -314,7 +328,7 @@ xf <- sbdi_call() |>
 
 There are many other ways of producing spatial plots in R, for example using the package `sf`.
 
-```{r plot_sf, message=FALSE, fig.width=9, fig.height=9}
+```{r plot_sf, message=FALSE}
 library(sf)
 
 xf_sf <- xf |> 
@@ -323,13 +337,18 @@ xf_sf <- xf |>
   st_as_sf(coords = c("decimalLongitude", "decimalLatitude"), 
            crs = 4326)
 
+```
+
+```{r plot_sf2, eval=FALSE, fig.width=9, fig.height=9}
 plot(swe_wgs84[["Border"]]$geometry, col = "grey", border = NA) 
 plot(xf_sf$geometry, pch = 19, add = TRUE)
 ```
 
+![Plot using \`sf\`](intro_files/figure-html/plot_sf-1.png)
+
 The `leaflet` package provides a simple method of producing browser-based maps with panning, zooming, and background layers:
 
-```{r plot_leaflet, message=FALSE, fig.width=9, fig.height=9}
+```{r plot_leaflet, message=FALSE}
 library(leaflet)
 ## make a link to the web page for each occurrence
 popup_link <- paste0("<a href=\"https://records.biodiversitydata.se/occurrences/",
@@ -341,6 +360,9 @@ m <- leaflet() |>
   addCircleMarkers(data = xf_sf , 
                    radius = 2, fillOpacity = .5, opacity = 1,
                    popup = popup_link)
+```
+
+```{r plot_leaflet, fig.width=9, fig.height=9}
 m
 ```
 
@@ -438,7 +460,7 @@ rownames(resSf) <- grid$id
 
 Finally plot the grid summary as a map:
 
-```{r grid_plot, message=FALSE, warning=FALSE, fig.width=6, fig.height=6}
+```{r grid_plot, message=FALSE, warning=FALSE, fig.width=6, fig.height=6, eval=FALSE}
 palBW <- leaflet::colorNumeric(palette = c("white", "navyblue"),
                                domain = c(0, max(resSf$nObs, na.rm = TRUE)), 
                                na.color = "transparent")
@@ -452,6 +474,8 @@ legend("bottomleft",
        title = "Number of \nobservations", pch = 15, bty = "n")
 suppressWarnings(par(oldpar))
 ```
+
+![Plot over grid](intro_files/figure-html/grid_plot-1.png)
 
 ### Other polygons
 
@@ -508,7 +532,7 @@ rownames(resSf) <- counties$LnNamn
 
 and again plotting as a map:
 
-```{r plot_counties, warning=FALSE, fig.width=6, fig.height=6}
+```{r plot_counties, warning=FALSE, fig.width=6, fig.height=6, eval=FALSE}
 palBW <- leaflet::colorNumeric(c("white", "navyblue"), 
                                c(0, max(resSf$nObs, na.rm = TRUE)), 
                                na.color = "transparent")
@@ -525,11 +549,13 @@ legend("bottomleft",
 suppressWarnings(par(oldpar))
 ```
 
+![Plot counties](intro_files/figure-html/plot_counties-1.png)
+
 ### Add the county name to each observation
 
 Let's try adding a column to the observations data frame to hold the id of the overlapped polygon, in this case, Län (county) and plot which observation didn't fall with any county.
 
-```{r plot_countyna, warning=FALSE, fig.width=8, fig.height=6}
+```{r plot_countyna, warning=FALSE, fig.width=8, fig.height=6, eval=FALSE}
 countiesLab <- as.character(counties$LnNamn)
 obs$county <- countiesLab[as.integer(st_intersects(obs, counties))]
 
@@ -540,6 +566,8 @@ plot(obs$geometry[which(is.na(obs$county))],
      pch = 19, cex = .5, col = "red", add = T)
 suppressWarnings(par(oldpar))
 ```
+
+![Plot NAs in counties](intro_files/figure-html/plot_countyna-1.png)
 
 It is clear from this image that there are observations outside the territorial extent of the country but that may be within coastal areas or reported by a Swedish institution outside the country.
 
@@ -582,7 +610,7 @@ wkt <- shape |>
 
 Now extract the species list in this polygon:
 
-```{r eval=FALSE}
+```{r show_call, eval=FALSE}
 sbdi_call() |>
   sbdi_identify("amphibia") |>
   sbdi_geolocate(wkt) |>
@@ -683,7 +711,7 @@ xgridded[, 1:10]
 
 Now we can start to examine the patterns in the data. Let's plot richness as a function of longitude:
 
-```{r plot_long, warning=FALSE, fig.width=8, fig.height=6}
+```{r plot_long, warning=FALSE, fig.width=8, fig.height=6, eval=FALSE}
 library(ggplot2)
 ggplot(xgridded, aes(longitude, richness)) + 
   labs(x = "Longitud (º)", 
@@ -693,9 +721,11 @@ ggplot(xgridded, aes(longitude, richness)) +
   theme_bw()
 ```
 
+![Richness over longitude](intro_files/figure-html/plot_long-1.png)
+
 Species richness as a function of environment:
 
-```{r plot_env, warning=FALSE, fig.width=8, fig.height=6}
+```{r plot_env, warning=FALSE, fig.width=8, fig.height=6, eval=FALSE}
 ggplot(xgridded, aes(meanTempWarmQuart, annPrec, 
                      colour = richness)) +
   labs(x = "Mean temperature of warmest quarter (ºC)" , 
@@ -705,6 +735,8 @@ ggplot(xgridded, aes(meanTempWarmQuart, annPrec,
   geom_point(size=3) + 
   theme_bw()
 ```
+
+![Richness over environment](intro_files/figure-html/plot_env-1.png)
 
 It seem like there is higher species richness in hottest areas.
 
@@ -716,9 +748,14 @@ library(vegan)
 D <- vegdist(xgridded[, sppcols], "bray")
 ## UPGMA clustering
 cl <- hclust(D, method = "ave")
+```
+
+```{r plot_cl, eval=FALSE}
 ## plot the dendrogram
 plot(cl)
 ```
+
+![Cluster dendrogram](intro_files/figure-html/plot_tree-1.png)
 
 ```{r plot_points, fig.width=6, fig.height=6, message=FALSE, warning=FALSE}
 ## extract group labels at the 10-group level
@@ -729,6 +766,10 @@ xgridded$grp <- as.factor(grp)
 ## colours for clusters
 thiscol <- c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", 
              "#e377c2", "#7f7f7f", "#bcbd22", "#17becf")
+
+```
+
+```{r plot_gridded, eval=FALSE}
 ggplot(xgridded, aes(longitude, latitude, colour = grp)) + 
   labs(x = "Longitude", y = "Latitude", colour = "Group") + 
   geom_point(size = 3) +
@@ -736,7 +777,9 @@ ggplot(xgridded, aes(longitude, latitude, colour = grp)) +
   theme_bw()
 ```
 
-```{r plot_points_map, fig.width=6, fig.height=3, message=FALSE, warning=FALSE}
+![](intro_files/figure-html/plot_points-1.png)
+
+```{r plot_points_map, fig.width=6, fig.height=3, message=FALSE, warning=FALSE, eval=FALSE}
 ## or a slightly nicer map plot
 library(maps)
 library(mapdata)
@@ -751,55 +794,7 @@ with(xgridded, points(longitude, latitude,
 suppressWarnings(par(oldpar))
 ```
 
-<!-- ## Example 6: Handlig data in R after being downloaded -->
-
-<!-- R is pretty powerful when it comes to cleaning, selecting and filtering data -->
-
-<!-- ```{r Datahandling, message=FALSE, fig.width=8, fig.height=6} -->
-
-<!-- x <- occurrences(taxon="Callitriche cophocarpa", -->
-
-<!--                   fq = "data_resource_uid:dr2", -->
-
-<!--                   verbose = FALSE) -->
-
-<!-- #keep spatially unique data at 0.01 degrees (latitude and longitude) -->
-
-<!-- ll001 <- unique(x, spatial = 0.01) -->
-
-<!-- # #keep only information for which fatal or "error" assertions do not exist -->
-
-<!-- nofat <- subset(x, remove.fatal = TRUE) -->
-
-<!-- #keep only observations with a maximum spatial uncertainty of 50m -->
-
-<!-- SpatCert <- subset(x, max.spatial.uncertainty = 50) -->
-
-<!-- # quickly get some more info about the data: -->
-
-<!-- # no. observations (records) -->
-
-<!-- nrow(x$data) -->
-
-<!-- # no. obs/year -->
-
-<!-- freq_year <- table(x$year) -->
-
-<!-- # no. obs across years: -->
-
-<!-- plot(freq_year, bty = "n", ylab="Frequency") -->
-
-<!-- # or -->
-
-<!-- hist(x$data$year, 20, main = "", xlab = "Year") -->
-
-<!-- # Subsetting is done using '[ ]' -->
-
-<!-- x10yr <- x$data[(x$data$year>=2010 & x$data$year<=2019),]  -->
-
-<!-- table(x10yr$year) -->
-
-<!-- ``` -->
+![](intro_files/figure-html/plot_points_map-1.png)
 
 <!-- ## Example 7: Aggregating data with 'BIRDS' -->
 
