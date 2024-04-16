@@ -273,7 +273,7 @@ assertError <- show_all(assertions) |>
 
 xassert <- sbdi_call() |> 
   sbdi_identify(taxa) |>
-  select(assertError$id) |> 
+  select(assertError$id, group = "basic") |> 
   atlas_occurrences()
 
 assert_count <- colSums(xassert[,assertError$id])
@@ -284,7 +284,7 @@ assertWarning <- show_all(assertions) |>
 
 xassert <- sbdi_call() |> 
   sbdi_identify(taxa) |>
-  select(all_of(assertWarning$id)) |> 
+  select(all_of(assertWarning$id), group = "basic") |> 
   atlas_occurrences()
 
 assert_count <- colSums(xassert[,assertWarning$id])
