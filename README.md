@@ -18,8 +18,7 @@ In R:
 
 Or the development version from GitHub:
 
-```{r, eval=FALSE}
-install.packages("remotes") 
+```{install.packages("remotes")}
 remotes::install_github("biodiversitydata-se/sbdi4r2")
 ```
 
@@ -27,8 +26,7 @@ remotes::install_github("biodiversitydata-se/sbdi4r2")
 
 If you see an error about "ERROR: lazy loading failed for package 'sbdi4r2'", this may be due to you trying to install on a network location. Try instead to install on a local location: first create the local location you want to use, and then specify this location for installing, and later loading the package:
 
-```{r windows, eval=FALSE}
-install_github("biodiversitydata-se/sbdi4r2", lib = "C:/pathname/MyLibrary")
+```{install_github("biodiversitydata-se/sbdi4r2", lib = "C:/pathname/MyLibrary")}
 library(sbdi4r2, lib.loc = "C:/pathname/MyLibrary")
 ```
 
@@ -36,8 +34,7 @@ library(sbdi4r2, lib.loc = "C:/pathname/MyLibrary")
 
 If you see an error about a failure to set default locale, you will need to manually set this:
 
-```{r mac, eval=FALSE}
-system('defaults write org.R-project.R force.LANG en_US.UTF-8')
+```{system('defaults write org.R-project.R force.LANG en_US.UTF-8')}
 ```
 
 and restart R.
@@ -48,7 +45,8 @@ More information can be found on the [CRAN R for Mac page](https://cran.r-projec
 
 First, ensure that `libcurl` is installed on your system --- e.g. on Ubuntu, open a terminal and do:
 
-`sudo apt-get install libcurl4-openssl-dev`
+```{apt-get install libcurl4-openssl-dev}
+```
 
 or install `libcurl4-openssl-dev` via the Software Centre.
 
@@ -66,24 +64,21 @@ Various aspects of the sbdi4r2 package can be customized.
 
 Each download request to SBDI servers is also accompanied by an "e-mail address" string that identifies the user making the request. You will need to provide an email address registered with the SBDI. You can create an account [here](https://auth.biodiversitydata.se/cas/login). Once an email is registered with the SBDI, it should be stored in the config:
 
-```{r config1, eval=FALSE}
-sbdi_config(email = "your.valid@emailaddress.com")
+```{sbdi_config(email = "your.valid@emailaddress.com")}
 ```
 
 ### Debugging
 
 If things aren't working as expected, more detail (particularly about web requests and caching behaviour) can be obtained by setting the verbose configuration option:
 
-```{r config2, eval=FALSE}
-sbdi_config(verbose = TRUE)
+```{sbdi_config(verbose = TRUE)}
 ```
 
 ### Setting the download reason
 
 SBDI requires that you provide a reason when downloading occurrence data (via the sbdi4r2 `occurrences()` function). You can provide this as a parameter directly to each call of `occurrences()`, or you can set it once per session using:
 
-```{r config3, eval=FALSE}
-sbdi_config(download_reason_id = "your_reason_id")
+```{sbdi_config(download_reason_id = "your_reason_id")}
 ```
 
 (See `sbdi_reasons()` for valid download reasons, e.g. download_reason_id=10 for "testing", or 7 for "ecological research", 8 for "systematic research/taxonomy", 3 for "education")
